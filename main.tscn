@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cop51duqojqpd"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_6mere"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_7btsx"]
+[ext_resource type="PackedScene" uid="uid://bfah2lv3o4l1n" path="res://note.tscn" id="2_sv0ju"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7o5ij"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_6mere")
+note_scene = ExtResource("2_sv0ju")
+
+[node name="ForesightMidiPlayer" parent="." instance=ExtResource("2_7btsx")]
+file = "res://ACDC.Thunderstruck K.mid"
+playing = true
+soundfont = "res://Touhou (1).sf2"
+
+[node name="LiveMidiPlayer" parent="." instance=ExtResource("2_7btsx")]
+file = "res://ACDC.Thunderstruck K.mid"
+volume_db = 0.0
+soundfont = "res://addons/midi/Touhou (1).sf2"
+
+[node name="Visualizer" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.927651, 0.2824, 0.312038, 1)
+position = Vector2(571, 322.5)
+scale = Vector2(64, 63)
+texture = SubResource("CanvasTexture_7o5ij")
+
+[node name="NoteSpawnPos" type="Node2D" parent="."]
+position = Vector2(572, 38)
+
+[node name="NoteEndPos" type="Node2D" parent="."]
+position = Vector2(572, 319)
+
+[connection signal="midi_event" from="ForesightMidiPlayer" to="." method="_on_foresight_midi_player_midi_event"]
+[connection signal="midi_event" from="LiveMidiPlayer" to="." method="_on_midi_player_midi_event"]

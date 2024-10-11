@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfah2lv3o4l1n"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0cxm4"]
+
+[node name="Note" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+scale = Vector2(50, 50)
+texture = SubResource("CanvasTexture_0cxm4")
