@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scenes/score_label.gd" id="2_8q88e"]
 
 [node name="ScoreLabel" type="RichTextLabel"]
+custom_minimum_size = Vector2(1000, 200)
 offset_left = 199.0
 offset_top = 49.0
 offset_right = 1236.0

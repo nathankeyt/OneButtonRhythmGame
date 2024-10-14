@@ -19,9 +19,18 @@ curve = SubResource("Curve2D_h8gcq")
 one_shot = true
 
 [node name="SelectBar" type="ProgressBar" parent="."]
+z_index = 2
 offset_left = -279.0
 offset_top = 122.0
 offset_right = 286.0
 offset_bottom = 171.0
+
+[node name="ExecuteTurnButton" type="Button" parent="."]
+z_index = 2
+offset_left = 323.0
+offset_top = 86.0
+offset_right = 541.0
+offset_bottom = 174.0
+text = "Dance!"
 
 [connection signal="timeout" from="SelectTimer" to="." method="_on_select_timer_timeout"]

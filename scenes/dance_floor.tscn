@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://duu8oi1tvej58"]
+[gd_scene load_steps=6 format=3 uid="uid://duu8oi1tvej58"]
+
+[ext_resource type="PackedScene" uid="uid://f3oi3l5bq6kv" path="res://player.tscn" id="1_x2i6q"]
+[ext_resource type="PackedScene" uid="uid://cktcm1p5yr7gg" path="res://enemy.tscn" id="2_55713"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6snqa"]
+
+[sub_resource type="Curve3D" id="Curve3D_qqap0"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_ij4mt"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="DanceFloor" type="Node3D"]
 
@@ -10,3 +27,15 @@ transform = Transform3D(1, 0, 0, 0, 0.889193, 0.457533, 0, -0.457533, 0.889193, 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(7.5191, 0, 0, 0, 7.5191, 0, 0, 0, 7.5191, 0, 0, 0)
 mesh = SubResource("PlaneMesh_6snqa")
+
+[node name="PlayerPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_qqap0")
+
+[node name="Player" parent="PlayerPath" instance=ExtResource("1_x2i6q")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0.5, 0)
+
+[node name="EnemyPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_ij4mt")
+
+[node name="Enemy" parent="EnemyPath" instance=ExtResource("2_55713")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.5, 0)

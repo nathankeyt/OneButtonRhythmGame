@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=18 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://scenes/total_score_label.gd" id="8_pmae1"]
 [ext_resource type="Script" path="res://scenes/temp_score_label.gd" id="9_67hft"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
+[ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
+[ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
 
 [sub_resource type="Resource" id="Resource_ith5q"]
 script = ExtResource("5_7pjfp")
@@ -19,7 +21,7 @@ m_add_score = 100
 script = ExtResource("3_ygbk7")
 title = "Dougie"
 text = "Teach me how to dougie"
-cost = 0
+cost = 1
 modifiable_effects = Array[ExtResource("4_rrtvn")]([SubResource("Resource_ith5q")])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 midi_track = ""
@@ -28,7 +30,7 @@ midi_track = ""
 script = ExtResource("3_ygbk7")
 title = "Two step"
 text = "Whats this one again"
-cost = 0
+cost = 2
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 midi_track = ""
@@ -46,7 +48,7 @@ midi_track = ""
 script = ExtResource("3_ygbk7")
 title = "Whip"
 text = ""
-cost = 0
+cost = 4
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 midi_track = ""
@@ -65,43 +67,66 @@ render_target_update_mode = 4
 [node name="DanceFloor" parent="DanceFloorContainer/DanceFloorViewport" instance=ExtResource("10_h4oj0")]
 
 [node name="Hand" parent="." instance=ExtResource("1_y3xwx")]
-position = Vector2(1341, 1221)
+position = Vector2(1280, 1221)
 
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2295, 1105)
 cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_0l5yq"), SubResource("Resource_11e8j")])
 card_renderer_scene = ExtResource("6_xowa6")
 
-[node name="PlayerTotal" parent="." instance=ExtResource("7_aymrh")]
-offset_left = 48.0
-offset_top = 36.0
-offset_right = 1085.0
-offset_bottom = 229.0
+[node name="PlayedCards" type="HBoxContainer" parent="."]
+offset_left = 37.0
+offset_top = 556.0
+offset_right = 2535.0
+offset_bottom = 801.0
+theme_override_constants/separation = 560
+alignment = 1
+script = ExtResource("11_vvjei")
+
+[node name="ScoreContainer" type="HBoxContainer" parent="."]
+offset_left = 252.0
+offset_top = 39.0
+offset_right = 2292.0
+offset_bottom = 389.0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="PlayerScores" type="VBoxContainer" parent="ScoreContainer"]
+layout_mode = 2
+theme_override_constants/separation = -50
+
+[node name="PlayerTotal" parent="ScoreContainer/PlayerScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
 text = "[center]0[/center]"
 script = ExtResource("8_pmae1")
 
-[node name="PlayerTemp" parent="." instance=ExtResource("7_aymrh")]
-offset_left = 46.0
-offset_top = 227.0
-offset_right = 1083.0
-offset_bottom = 420.0
+[node name="PlayerTemp" parent="ScoreContainer/PlayerScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
 text = "[center]+0[/center]"
 script = ExtResource("9_67hft")
 
-[node name="EnemyTotal" parent="." instance=ExtResource("7_aymrh")]
-offset_left = 1444.0
-offset_top = 36.0
-offset_right = 2481.0
-offset_bottom = 229.0
+[node name="EnemyScores" type="VBoxContainer" parent="ScoreContainer"]
+layout_mode = 2
+theme_override_constants/separation = -50
+
+[node name="EnemyTotal" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
 text = "[center]0[/center]"
 script = ExtResource("8_pmae1")
 turn_type = 1
 
-[node name="EnemyTemp" parent="." instance=ExtResource("7_aymrh")]
-offset_left = 1442.0
-offset_top = 227.0
-offset_right = 2479.0
-offset_bottom = 420.0
+[node name="EnemyTemp" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
 text = "[center]+0[/center]"
 script = ExtResource("9_67hft")
 turn_type = 1
+
+[node name="ResourceBar" type="ProgressBar" parent="."]
+offset_left = 55.0
+offset_top = 25.0
+offset_right = 584.0
+offset_bottom = 182.0
+max_value = 5.0
+step = 1.0
+value = 5.0
+script = ExtResource("12_eit6h")

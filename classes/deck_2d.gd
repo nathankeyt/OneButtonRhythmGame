@@ -24,3 +24,6 @@ func pop_rendered() -> CardRenderer2D:
 	
 func push(card: Card) -> void:
 	cards.push_back(card)
+
+func shuffle() -> void:
+	cards.shuffle()

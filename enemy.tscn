@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cktcm1p5yr7gg"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_ansqy"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_abe4g"]
+
+[node name="Enemy" type="PathFollow3D"]
+script = ExtResource("1_ansqy")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+modulate = Color(0, 0, 0, 1)
+pixel_size = 1.0
+axis = 0
+texture = SubResource("CanvasTexture_abe4g")
