@@ -1,0 +1,40 @@
+[gd_scene load_steps=10 format=3 uid="uid://rxmkttaq2kf6"]
+
+[ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_0xgak"]
+[ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_s20cl"]
+[ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="3_1ti53"]
+[ext_resource type="Script" path="res://classes/card.gd" id="3_bd8xg"]
+[ext_resource type="Script" path="res://classes/effect.gd" id="4_aie2x"]
+[ext_resource type="Script" path="res://classes/derived_effects/add_score.gd" id="5_3233s"]
+
+[sub_resource type="Resource" id="Resource_ith5q"]
+script = ExtResource("5_3233s")
+m_add_score = 100
+
+[sub_resource type="Resource" id="Resource_py45q"]
+script = ExtResource("3_bd8xg")
+title = "Dougie"
+text = "Teach me how to dougie"
+cost = 0
+modifiable_effects = Array[ExtResource("4_aie2x")]([SubResource("Resource_ith5q")])
+unmodifiable_effects = Array[ExtResource("4_aie2x")]([])
+midi_track = ""
+
+[sub_resource type="Resource" id="Resource_1rj1d"]
+script = ExtResource("3_bd8xg")
+title = "Two step"
+text = "Whats this one again"
+cost = 0
+modifiable_effects = Array[ExtResource("4_aie2x")]([])
+unmodifiable_effects = Array[ExtResource("4_aie2x")]([])
+midi_track = ""
+
+[node name="CardTest" type="Node2D"]
+
+[node name="Hand" parent="." instance=ExtResource("1_0xgak")]
+position = Vector2(556, 539)
+
+[node name="DefaultDeck" parent="." instance=ExtResource("2_s20cl")]
+position = Vector2(993, 505)
+cards = Array[ExtResource("3_bd8xg")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d")])
+card_renderer_scene = ExtResource("3_1ti53")

@@ -1,21 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://cop51duqojqpd"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_6mere"]
-[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_7btsx"]
-[ext_resource type="PackedScene" uid="uid://bfah2lv3o4l1n" path="res://note.tscn" id="2_sv0ju"]
+[ext_resource type="Script" path="res://scenes/midi_test.gd" id="1_rlly0"]
+[ext_resource type="PackedScene" uid="uid://bfah2lv3o4l1n" path="res://scenes/note.tscn" id="2_as8vj"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_11bvc"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7o5ij"]
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_6mere")
-note_scene = ExtResource("2_sv0ju")
+[node name="MidiTest" type="Node2D"]
+script = ExtResource("1_rlly0")
+note_scene = ExtResource("2_as8vj")
 
-[node name="ForesightMidiPlayer" parent="." instance=ExtResource("2_7btsx")]
+[node name="ForesightMidiPlayer" parent="." instance=ExtResource("3_11bvc")]
 file = "res://ACDC.Thunderstruck K.mid"
 playing = true
 soundfont = "res://Touhou (1).sf2"
 
-[node name="LiveMidiPlayer" parent="." instance=ExtResource("2_7btsx")]
+[node name="LiveMidiPlayer" parent="." instance=ExtResource("3_11bvc")]
 file = "res://ACDC.Thunderstruck K.mid"
 volume_db = 0.0
 soundfont = "res://addons/midi/Touhou (1).sf2"

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwfmah13oq5ef"]
+
+[ext_resource type="Script" path="res://classes/hand_2d.gd" id="1_6troi"]
+
+[sub_resource type="Curve2D" id="Curve2D_h8gcq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -280, 22, 0, 0, 0, 0, -206, -11, 0, 0, 0, 0, -125, -30, 0, 0, 0, 0, -45, -39, 0, 0, 0, 0, 39, -44, 0, 0, 0, 0, 110, -33, 0, 0, 0, 0, 181, -14, 0, 0, 0, 0, 257, 31)
+}
+point_count = 8
+
+[node name="Hand" type="Node2D"]
+script = ExtResource("1_6troi")
+
+[node name="DisplayPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_h8gcq")
+
+[node name="SelectTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SelectBar" type="ProgressBar" parent="."]
+offset_left = -205.0
+offset_top = 2.0
+offset_right = 212.0
+offset_bottom = 29.0
+
+[connection signal="timeout" from="SelectTimer" to="." method="_on_select_timer_timeout"]

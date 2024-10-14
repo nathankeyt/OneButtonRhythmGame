@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://jpw8wprr42o5"]
+
+[ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="2_00y3p"]
+
+[node name="DefaultCard" type="Node2D"]
+
+[node name="DefaultCardRenderer" parent="." instance=ExtResource("2_00y3p")]

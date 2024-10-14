@@ -14,11 +14,6 @@ func start() -> void:
 	await get_tree().create_timer(lead_time).timeout
 	$LiveMidiPlayer.play()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_midi_player_midi_event(channel: Variant, event: Variant) -> void:
 	match event.type:
 		SMF.MIDIEventType.note_on:

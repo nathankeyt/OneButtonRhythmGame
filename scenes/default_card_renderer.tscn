@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjw6u7yhnkpwv"]
+
+[ext_resource type="Script" path="res://classes/card_renderer_2d.gd" id="1_esn42"]
+[ext_resource type="Theme" uid="uid://drmnwgnq0lshg" path="res://themes/default_card.tres" id="2_ksp66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1mxs7"]
+size = Vector2(192, 256)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_rdnes"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_eg05a"]
+
+[node name="DefaultCardRenderer" type="Area2D"]
+script = ExtResource("1_esn42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1mxs7")
+
+[node name="BackdropSprite" type="Sprite2D" parent="."]
+scale = Vector2(192, 256)
+texture = SubResource("CanvasTexture_rdnes")
+
+[node name="ImgSprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-3.8147e-06, -44)
+scale = Vector2(176, 96)
+texture = SubResource("CanvasTexture_eg05a")
+
+[node name="TitleLabel" type="RichTextLabel" parent="."]
+offset_left = -92.0
+offset_top = -124.0
+offset_right = 33.0
+offset_bottom = -92.0
+theme = ExtResource("2_ksp66")
+text = "Title
+"
+
+[node name="CostLabel" type="RichTextLabel" parent="."]
+offset_left = 56.0
+offset_top = -123.0
+offset_right = 83.0
+offset_bottom = -93.0
+theme = ExtResource("2_ksp66")
+text = "1"
+
+[node name="TextLabel" type="RichTextLabel" parent="."]
+offset_left = -87.0
+offset_top = 17.0
+offset_right = 86.0
+offset_bottom = 116.0
+theme = ExtResource("2_ksp66")
+text = "Text
+"
