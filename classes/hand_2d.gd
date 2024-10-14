@@ -23,6 +23,7 @@ func add_card(card: CardRenderer2D) -> void:
 	
 func render_cards() -> void:
 	var hand_size: int = cards.size()
+	var last_index: int = hand_size - 1
 	var card_pos_arr: Array[Node] = display_path.get_children()
 	var card_pos_arr_size: int = card_pos_arr.size()
 	
@@ -36,7 +37,6 @@ func render_cards() -> void:
 		display_path.add_child(card_pos)
 		display_path.move_child(card_pos, 0)
 			
-		var last_index: int = hand_size - 1
 		var curr_card: CardRenderer2D = cards[last_index - i]
 		var increment: float = 1.0 / max_hand_size
 		
