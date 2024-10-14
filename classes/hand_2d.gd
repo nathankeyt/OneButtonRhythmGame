@@ -33,13 +33,15 @@ func render_cards() -> void:
 		else:
 			card_pos = card_pos_arr[i]
 			
-		var reverse_index: int = hand_size - 1 - i
-		var curr_card: CardRenderer2D = cards[reverse_index]
-		
-		card_pos.progress_ratio = reverse_index * (1.0 / max_hand_size)
 		display_path.add_child(card_pos)
 		display_path.move_child(card_pos, 0)
+			
+		var last_index: int = hand_size - 1
+		var curr_card: CardRenderer2D = cards[last_index - i]
+		var increment: float = 1.0 / max_hand_size
 		
+		card_pos.progress_ratio = 0.5 + (((last_index / 2.0) - i) * increment)
+		print(curr_card.card.title, " ", card_pos.progress_ratio)
 		curr_card.show()
 		curr_card.reparent(card_pos, false)
 

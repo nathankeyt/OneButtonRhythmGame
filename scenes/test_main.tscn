@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=16 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
@@ -33,6 +33,24 @@ modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 midi_track = ""
 
+[sub_resource type="Resource" id="Resource_0l5yq"]
+script = ExtResource("3_ygbk7")
+title = "Nay Nay"
+text = ""
+cost = 0
+modifiable_effects = Array[ExtResource("4_rrtvn")]([])
+unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+midi_track = ""
+
+[sub_resource type="Resource" id="Resource_11e8j"]
+script = ExtResource("3_ygbk7")
+title = "Whip"
+text = ""
+cost = 0
+modifiable_effects = Array[ExtResource("4_rrtvn")]([])
+unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+midi_track = ""
+
 [node name="TestMain" type="Node2D"]
 
 [node name="DanceFloorContainer" type="SubViewportContainer" parent="."]
@@ -51,7 +69,7 @@ position = Vector2(1341, 1221)
 
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2295, 1105)
-cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d")])
+cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_0l5yq"), SubResource("Resource_11e8j")])
 card_renderer_scene = ExtResource("6_xowa6")
 
 [node name="PlayerTotal" parent="." instance=ExtResource("7_aymrh")]
