@@ -20,6 +20,8 @@ func _ready() -> void:
 
 func add_card(card: CardRenderer2D) -> void:
 	if card:
+		if hover_index == cards.size():
+			hover_index += 1
 		cards.push_back(card)
 		render_cards()
 	
@@ -50,7 +52,7 @@ func render_cards() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):
 		print('test')
-		add_card(BattleManager.deck.pop_rendered())
+		draw_card()
 			  
 	if not cards.is_empty():
 		if event.is_action_pressed("select"):
@@ -136,3 +138,10 @@ func _on_select_timer_timeout() -> void:
 
 func get_time_in(timer: Timer):
 	return timer.wait_time - timer.time_left
+
+func draw_cards(num: int):
+	for i in num:
+		draw_card()
+
+func draw_card():
+	add_card(BattleManager.deck.pop_rendered())
