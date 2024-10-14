@@ -1,14 +1,9 @@
 extends Node
 
-enum ActorType {PLAYER, ENEMY}
+enum TurnType {PLAYER, ENEMY}
 
 var deck: Deck2D
 var hand: Hand2D
-
-var player_temp_score_label: ScoreLabel
-var player_total_score_label: ScoreLabel
-var enemy_temp_score_label: ScoreLabel
-var enemy_total_score_label: ScoreLabel
 
 var player_temp_score: int = 0
 var player_total_score: int = 0
@@ -17,19 +12,8 @@ var enemy_total_score: int = 0
 
 signal player_score_updated(score: int)
 signal enemy_score_updated(score: int)
-
-func _ready() -> void:
-	if player_temp_score_label:
-		player_score_updated.connect(player_temp_score_label.update_score)
-		
-	if player_total_score_label:
-		player_score_updated.connect(player_total_score_label.update_score)
-		
-	if enemy_temp_score_label:
-		enemy_score_updated.connect(enemy_temp_score_label.update_score)
-		
-	if enemy_total_score_label:
-		enemy_score_updated.connect(enemy_total_score_label.update_score)
+signal player_score_settled(score: int)
+signal enemy_score_settled(score: int)
 
 func add_player_score(score: int):
 	player_temp_score += score

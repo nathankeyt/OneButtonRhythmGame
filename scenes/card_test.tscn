@@ -43,17 +43,35 @@ cards = Array[ExtResource("3_bd8xg")]([SubResource("Resource_py45q"), SubResourc
 card_renderer_scene = ExtResource("3_1ti53")
 
 [node name="PlayerTotal" parent="." instance=ExtResource("7_3tq0y")]
-offset_left = 827.0
-offset_top = 33.0
-offset_right = 1864.0
-offset_bottom = 226.0
+offset_left = 48.0
+offset_top = 36.0
+offset_right = 1085.0
+offset_bottom = 229.0
 text = "[center]0[/center]"
 script = ExtResource("8_ssppo")
 
 [node name="PlayerTemp" parent="." instance=ExtResource("7_3tq0y")]
-offset_left = 825.0
-offset_top = 224.0
-offset_right = 1862.0
-offset_bottom = 417.0
+offset_left = 46.0
+offset_top = 227.0
+offset_right = 1083.0
+offset_bottom = 420.0
 text = "[center]+0[/center]"
 script = ExtResource("9_5ynub")
+
+[node name="EnemyTotal" parent="." instance=ExtResource("7_3tq0y")]
+offset_left = 1444.0
+offset_top = 36.0
+offset_right = 2481.0
+offset_bottom = 229.0
+text = "[center]0[/center]"
+script = ExtResource("8_ssppo")
+turn_type = 1
+
+[node name="EnemyTemp" parent="." instance=ExtResource("7_3tq0y")]
+offset_left = 1442.0
+offset_top = 227.0
+offset_right = 2479.0
+offset_bottom = 420.0
+text = "[center]+0[/center]"
+script = ExtResource("9_5ynub")
+turn_type = 1

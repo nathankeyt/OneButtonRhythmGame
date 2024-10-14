@@ -1,11 +1,11 @@
 extends ScoreLabel
 
-func _init() -> void:
-	match actor_type:
-		BattleManager.ActorType.PLAYER:
-			BattleManager.player_total_score_label = self
-		BattleManager.ActorType.ENEMY:
-			BattleManager.enemy_total_score_label = self
+func _ready() -> void:
+	match turn_type:
+		BattleManager.TurnType.PLAYER:
+			BattleManager.player_score_settled.connect(update_score)
+		BattleManager.TurnType.ENEMY:
+			BattleManager.enemy_score_settled.connect(update_score)
 
 func update_score(score: int) -> void:
 	text = "[center]" + str(score) + "[/center]"

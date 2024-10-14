@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://nlrmo5wi48pr"]
+
+[ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
+[ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
+[ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
+[ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
+[ext_resource type="Script" path="res://classes/derived_effects/add_score.gd" id="5_7pjfp"]
+[ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
+[ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
+[ext_resource type="Script" path="res://scenes/total_score_label.gd" id="8_pmae1"]
+[ext_resource type="Script" path="res://scenes/temp_score_label.gd" id="9_67hft"]
+[ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
+
+[sub_resource type="Resource" id="Resource_ith5q"]
+script = ExtResource("5_7pjfp")
+m_add_score = 100
+
+[sub_resource type="Resource" id="Resource_py45q"]
+script = ExtResource("3_ygbk7")
+title = "Dougie"
+text = "Teach me how to dougie"
+cost = 0
+modifiable_effects = Array[ExtResource("4_rrtvn")]([SubResource("Resource_ith5q")])
+unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+midi_track = ""
+
+[sub_resource type="Resource" id="Resource_1rj1d"]
+script = ExtResource("3_ygbk7")
+title = "Two step"
+text = "Whats this one again"
+cost = 0
+modifiable_effects = Array[ExtResource("4_rrtvn")]([])
+unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+midi_track = ""
+
+[node name="TestMain" type="Node2D"]
+
+[node name="DanceFloorContainer" type="SubViewportContainer" parent="."]
+offset_right = 2560.0
+offset_bottom = 1440.0
+
+[node name="DanceFloorViewport" type="SubViewport" parent="DanceFloorContainer"]
+handle_input_locally = false
+size = Vector2i(2560, 1440)
+render_target_update_mode = 4
+
+[node name="DanceFloor" parent="DanceFloorContainer/DanceFloorViewport" instance=ExtResource("10_h4oj0")]
+
+[node name="Hand" parent="." instance=ExtResource("1_y3xwx")]
+position = Vector2(1341, 1221)
+
+[node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
+position = Vector2(2295, 1105)
+cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d")])
+card_renderer_scene = ExtResource("6_xowa6")
+
+[node name="PlayerTotal" parent="." instance=ExtResource("7_aymrh")]
+offset_left = 48.0
+offset_top = 36.0
+offset_right = 1085.0
+offset_bottom = 229.0
+text = "[center]0[/center]"
+script = ExtResource("8_pmae1")
+
+[node name="PlayerTemp" parent="." instance=ExtResource("7_aymrh")]
+offset_left = 46.0
+offset_top = 227.0
+offset_right = 1083.0
+offset_bottom = 420.0
+text = "[center]+0[/center]"
+script = ExtResource("9_67hft")
+
+[node name="EnemyTotal" parent="." instance=ExtResource("7_aymrh")]
+offset_left = 1444.0
+offset_top = 36.0
+offset_right = 2481.0
+offset_bottom = 229.0
+text = "[center]0[/center]"
+script = ExtResource("8_pmae1")
+turn_type = 1
+
+[node name="EnemyTemp" parent="." instance=ExtResource("7_aymrh")]
+offset_left = 1442.0
+offset_top = 227.0
+offset_right = 2479.0
+offset_bottom = 420.0
+text = "[center]+0[/center]"
+script = ExtResource("9_67hft")
+turn_type = 1
