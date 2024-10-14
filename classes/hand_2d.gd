@@ -23,7 +23,6 @@ func add_card(card: CardRenderer2D) -> void:
 	
 func render_cards() -> void:
 	var hand_size: int = cards.size()
-	print(hand_size)
 	var card_pos_arr: Array[Node] = display_path.get_children()
 	var card_pos_arr_size: int = card_pos_arr.size()
 	
@@ -38,7 +37,6 @@ func render_cards() -> void:
 		var curr_card: CardRenderer2D = cards[reverse_index]
 		
 		card_pos.progress_ratio = reverse_index * (1.0 / max_hand_size)
-		print(curr_card.card.title, " ", i)
 		display_path.add_child(card_pos)
 		display_path.move_child(card_pos, 0)
 		
@@ -87,7 +85,6 @@ func play_card(index: int) -> void:
 		return
 		
 	var card_renderer: CardRenderer2D = cards[index]
-	print("played " + card_renderer.card.title)
 	card_renderer.card.apply_effects()
 	remove_card(index)
 	

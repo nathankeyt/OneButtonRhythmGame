@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2a6y3ig64vm0"]
+
+[ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="1_01tyg"]
+[ext_resource type="Script" path="res://scenes/score_label.gd" id="2_8q88e"]
+
+[node name="ScoreLabel" type="RichTextLabel"]
+offset_left = 199.0
+offset_top = 49.0
+offset_right = 1236.0
+offset_bottom = 242.0
+theme = ExtResource("1_01tyg")
+bbcode_enabled = true
+text = "[center]99999999[/center]"
+script = ExtResource("2_8q88e")

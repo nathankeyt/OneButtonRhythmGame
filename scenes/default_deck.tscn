@@ -8,5 +8,5 @@
 script = ExtResource("1_76t5r")
 
 [node name="CardBacking" type="Sprite2D" parent="."]
-scale = Vector2(192, 256)
+scale = Vector2(384, 512)
 texture = SubResource("CanvasTexture_vbxf3")
