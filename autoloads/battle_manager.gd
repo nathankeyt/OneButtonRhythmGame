@@ -12,6 +12,8 @@ var max_resources: int = 5
 var deck: Deck2D
 var hand: Hand2D
 
+var dance_grid: DanceGrid
+
 var player: Player
 var enemies: Array[Enemy]
 

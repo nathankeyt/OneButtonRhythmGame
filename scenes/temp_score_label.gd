@@ -1,6 +1,6 @@
 extends ScoreLabel
 
-func _init() -> void:
+func _ready() -> void:
 	match turn_type:
 		BattleManager.TurnType.PLAYER:
 			BattleManager.player_score_updated.connect(update_score)

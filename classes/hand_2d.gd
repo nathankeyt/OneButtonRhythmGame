@@ -76,7 +76,7 @@ func render_cards() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):
 		print('test')
-		draw_card()
+		#draw_card()
 			  
 	if not cards.is_empty():
 		if event.is_action_pressed("select"):

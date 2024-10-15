@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://duu8oi1tvej58"]
+[gd_scene load_steps=9 format=3 uid="uid://duu8oi1tvej58"]
 
 [ext_resource type="PackedScene" uid="uid://f3oi3l5bq6kv" path="res://player.tscn" id="1_x2i6q"]
 [ext_resource type="PackedScene" uid="uid://cktcm1p5yr7gg" path="res://enemy.tscn" id="2_55713"]
+[ext_resource type="Script" path="res://scenes/dance_grid.gd" id="3_dec0i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fxqch"]
+albedo_color = Color(0.0807833, 0.0807833, 0.0807833, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6snqa"]
+material = SubResource("StandardMaterial3D_fxqch")
 
 [sub_resource type="Curve3D" id="Curve3D_qqap0"]
 _data = {
@@ -19,6 +24,9 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="BoxMesh" id="BoxMesh_n4gmo"]
+size = Vector3(0.8, 0.2, 0.8)
+
 [node name="DanceFloor" type="Node3D"]
 metadata/_edit_group_ = true
 
@@ -30,6 +38,7 @@ transform = Transform3D(7.5191, 0, 0, 0, 7.5191, 0, 0, 0, 7.5191, 0, 0, 0)
 mesh = SubResource("PlaneMesh_6snqa")
 
 [node name="PlayerPath" type="Path3D" parent="."]
+transform = Transform3D(1, -3.71795e-05, 0.000185178, 3.72327e-05, 1, -0.000293551, -0.000185167, 0.000293557, 1, 0, 0, 0)
 curve = SubResource("Curve3D_qqap0")
 
 [node name="Player" parent="PlayerPath" instance=ExtResource("1_x2i6q")]
@@ -40,3 +49,9 @@ curve = SubResource("Curve3D_ij4mt")
 
 [node name="Enemy" parent="EnemyPath" instance=ExtResource("2_55713")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.5, 0)
+
+[node name="DanceGrid" type="Node3D" parent="."]
+script = ExtResource("3_dec0i")
+mesh = SubResource("BoxMesh_n4gmo")
+cell_size = 1
+grid_size = 12
