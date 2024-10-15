@@ -1,5 +1,5 @@
 extends Character
 class_name Player
 
-func _ready() -> void:
+func _init() -> void:
 	BattleManager.player = self

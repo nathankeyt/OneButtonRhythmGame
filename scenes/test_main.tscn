@@ -70,7 +70,7 @@ render_target_update_mode = 4
 position = Vector2(1280, 1221)
 
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
-position = Vector2(2295, 1105)
+position = Vector2(2339, 1170)
 cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_0l5yq"), SubResource("Resource_11e8j")])
 card_renderer_scene = ExtResource("6_xowa6")
 

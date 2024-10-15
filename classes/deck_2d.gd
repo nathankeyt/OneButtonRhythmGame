@@ -6,7 +6,7 @@ class_name Deck2D
 
 @onready var sprite: Sprite2D = $CardBacking
 
-func _ready() -> void:
+func _init() -> void:
 	BattleManager.deck = self
 
 func pop() -> Card:
@@ -20,6 +20,7 @@ func pop_rendered() -> CardRenderer2D:
 	add_child(card_renderer)
 	card_renderer.hide()
 	card_renderer.set_card(pop())
+	card_renderer.flip_card(false)
 	return card_renderer
 	
 func push(card: Card) -> void:

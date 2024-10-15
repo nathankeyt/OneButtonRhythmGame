@@ -20,6 +20,7 @@ _data = {
 point_count = 2
 
 [node name="DanceFloor" type="Node3D"]
+metadata/_edit_group_ = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.889193, 0.457533, 0, -0.457533, 0.889193, 0, 3.46668, 4.99212)

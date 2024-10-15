@@ -4,13 +4,17 @@
 
 [sub_resource type="Curve2D" id="Curve2D_h8gcq"]
 _data = {
-"points": PackedVector2Array(-672.584, 106.173, 672.584, -106.173, -848, 83, -748.644, -111.291, 748.644, 111.291, 853, 75)
+"points": PackedVector2Array(-672.584, 106.173, 672.584, -106.173, -845, 55, -748.644, -111.291, 748.644, 111.291, 853, 53)
 }
 point_count = 2
 
 [node name="Hand" type="Node2D"]
 script = ExtResource("1_6troi")
+highlight_scale = 1.1
+highlight_shift = 50.0
+highlight_speed = 0.05
 max_hand_size = 7
+draw_delay = 0.25
 
 [node name="DisplayPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_h8gcq")
