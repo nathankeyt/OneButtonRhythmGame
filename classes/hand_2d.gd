@@ -71,7 +71,6 @@ func render_cards() -> void:
 			
 		display_path.move_child(card_pos, 0)
 			
-		
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):

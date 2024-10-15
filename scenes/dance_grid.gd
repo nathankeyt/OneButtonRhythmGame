@@ -16,10 +16,9 @@ func _init() -> void:
 	BattleManager.dance_grid = self
 	
 func _ready() -> void:
-	BattleManager.beat_played.connect(animate_circle)
 	generate_grid()
-	await get_tree().create_timer(1.0).timeout
-	animate_circle(BattleManager.BeatType.STANDARD, 2.0)
+	BattleManager.note_played.connect(animate_circle)
+	animate_circle(BattleManager.BeatType.STANDARD)
 
 func generate_grid() -> void:
 	for x in grid_size:
@@ -55,14 +54,13 @@ func activate_circle(radius: int, duration: float = 1.0):
 		material.emission_enabled = false
 				
 
-func animate_circle(beat_type: BattleManager.BeatType, duration: float = 1.0):
+func animate_circle(beat_type: BattleManager.BeatType):
 	match beat_type:
 		BattleManager.BeatType.STANDARD:
-			animate_standard(duration)
+			animate_standard()
 
-func animate_standard(duration: float):
-	var beat_duration: float = duration / total_radius
+func animate_standard():
 	for radius in total_radius:
-		await activate_circle(total_radius - radius, beat_duration)
+		activate_circle(total_radius - radius, 0.25)
+		await GlobalAudioManager.beat_played
 		
-	

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://duu8oi1tvej58"]
 
-[ext_resource type="PackedScene" uid="uid://f3oi3l5bq6kv" path="res://player.tscn" id="1_x2i6q"]
-[ext_resource type="PackedScene" uid="uid://cktcm1p5yr7gg" path="res://enemy.tscn" id="2_55713"]
+[ext_resource type="PackedScene" uid="uid://f3oi3l5bq6kv" path="res://scenes/player.tscn" id="1_x2i6q"]
+[ext_resource type="PackedScene" uid="uid://cktcm1p5yr7gg" path="res://scenes/enemy.tscn" id="2_55713"]
 [ext_resource type="Script" path="res://scenes/dance_grid.gd" id="3_dec0i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fxqch"]

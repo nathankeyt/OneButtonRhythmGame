@@ -12,7 +12,8 @@
 
 [sub_resource type="Resource" id="Resource_ith5q"]
 script = ExtResource("5_3233s")
-m_add_score = 100
+m_amount = 0
+m_operator_type = 0
 
 [sub_resource type="Resource" id="Resource_py45q"]
 script = ExtResource("3_bd8xg")
@@ -21,7 +22,6 @@ text = "Teach me how to dougie"
 cost = 0
 modifiable_effects = Array[ExtResource("4_aie2x")]([SubResource("Resource_ith5q")])
 unmodifiable_effects = Array[ExtResource("4_aie2x")]([])
-midi_track = ""
 
 [sub_resource type="Resource" id="Resource_1rj1d"]
 script = ExtResource("3_bd8xg")
@@ -30,7 +30,6 @@ text = "Whats this one again"
 cost = 0
 modifiable_effects = Array[ExtResource("4_aie2x")]([])
 unmodifiable_effects = Array[ExtResource("4_aie2x")]([])
-midi_track = ""
 
 [node name="CardTest" type="Node2D"]
 

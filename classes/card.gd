@@ -7,7 +7,7 @@ class_name Card
 @export var img: ImageTexture
 @export var modifiable_effects: Array[Effect]
 @export var unmodifiable_effects: Array[Effect]
-@export_file var midi_track: String
+@export var beat_track: BeatTrack
 
 func apply_effects() -> void:
 	for effect: Effect in modifiable_effects:

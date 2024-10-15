@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cktcm1p5yr7gg"]
 
-[ext_resource type="Script" path="res://enemy.gd" id="1_ansqy"]
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_ansqy"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_abe4g"]
 

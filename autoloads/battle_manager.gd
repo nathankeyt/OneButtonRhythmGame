@@ -1,6 +1,6 @@
 extends Node
 
-enum BeatType {STANDARD}
+enum BeatType {NONE, STANDARD}
 enum TurnType {PLAYER = 0, ENEMY = 1}
 
 var curr_turn: TurnType = TurnType.PLAYER
@@ -33,7 +33,8 @@ signal turn_ended(turn_type: TurnType)
 
 signal resource_updated(amount: int)
 
-signal beat_played(beat_type: BeatType, duration: float)
+signal note_played(beat_type: BeatType)
+signal track_ended
 
 func add_player_score(score: int):
 	player_temp_score += score
@@ -50,8 +51,17 @@ func execute_turn():
 	match curr_turn:
 		TurnType.PLAYER:
 			player.execute_turn()
+			
+			
 			for card_renderer: CardRenderer2D in played_cards:
-				card_renderer.card.apply_effects()
+				var card: Card = card_renderer.card
+				
+				play_beat_track(card.beat_track)
+				card_renderer.hide()
+				await track_ended
+				
+				card.apply_effects()
+			
 			turn_ended.emit(curr_turn)
 			curr_turn = TurnType.ENEMY
 		TurnType.ENEMY:
@@ -81,3 +91,20 @@ func add_resources(amount: int):
 func update_resources(amount: int):
 	curr_resources = amount
 	resource_updated.emit(curr_resources)
+
+func play_beat_track(beat_track: BeatTrack):
+	if not beat_track:
+		return
+		
+	while(true):
+		await GlobalAudioManager.beat_played
+		var beat_type: BeatType = beat_track.get_curr_beat()
+		match beat_type:
+			BeatType.NONE:
+				pass
+			_:
+				note_played.emit(beat_type)
+				
+		if not beat_track.increment_beat(): break
+	
+			

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BeatTrack" load_steps=2 format=3 uid="uid://dnw06mpoy2de5"]
+
+[ext_resource type="Script" path="res://classes/beat_track.gd" id="1_upnj4"]
+
+[resource]
+script = ExtResource("1_upnj4")
+beat_num = 16
+beats = Array[int]([1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
