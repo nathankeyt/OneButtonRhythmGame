@@ -1,5 +1,6 @@
 extends Node
 
+enum BeatType {STANDARD}
 enum TurnType {PLAYER = 0, ENEMY = 1}
 
 var curr_turn: TurnType = TurnType.PLAYER
@@ -31,6 +32,8 @@ signal card_played(card_renderer: CardRenderer2D)
 signal turn_ended(turn_type: TurnType)
 
 signal resource_updated(amount: int)
+
+signal beat_played(beat_type: BeatType, duration: float)
 
 func add_player_score(score: int):
 	player_temp_score += score

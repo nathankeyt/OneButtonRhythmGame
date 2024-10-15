@@ -31,7 +31,7 @@ size = Vector3(0.8, 0.2, 0.8)
 metadata/_edit_group_ = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.889193, 0.457533, 0, -0.457533, 0.889193, 0, 3.46668, 4.99212)
+transform = Transform3D(1, 0, 0, 0, 0.806083, 0.591803, 0, -0.591803, 0.806083, 0, 4.93086, 6.43163)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(7.5191, 0, 0, 0, 7.5191, 0, 0, 0, 7.5191, 0, 0, 0)
@@ -53,5 +53,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.5
 [node name="DanceGrid" type="Node3D" parent="."]
 script = ExtResource("3_dec0i")
 mesh = SubResource("BoxMesh_n4gmo")
-cell_size = 1
-grid_size = 12
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.00188498, 0.999998, 0, -0.999998, -0.00188498, 0, 12.5625, 0)
+visible = false
+light_energy = 0.1
