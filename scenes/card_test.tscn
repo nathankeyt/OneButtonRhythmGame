@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="3_1ti53"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_bd8xg"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_aie2x"]
-[ext_resource type="Script" path="res://classes/derived_effects/add_score.gd" id="5_3233s"]
+[ext_resource type="Script" path="res://classes/derived_effects/simple_operation.gd" id="5_3233s"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_3tq0y"]
 [ext_resource type="Script" path="res://scenes/total_score_label.gd" id="8_ssppo"]
 [ext_resource type="Script" path="res://scenes/temp_score_label.gd" id="9_5ynub"]

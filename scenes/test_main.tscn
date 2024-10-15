@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
-[ext_resource type="Script" path="res://classes/derived_effects/add_score.gd" id="5_7pjfp"]
+[ext_resource type="Script" path="res://classes/derived_effects/simple_operation.gd" id="5_7pjfp"]
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
 [ext_resource type="Script" path="res://scenes/total_score_label.gd" id="8_pmae1"]
@@ -15,7 +15,8 @@
 
 [sub_resource type="Resource" id="Resource_ith5q"]
 script = ExtResource("5_7pjfp")
-m_add_score = 100
+m_amount = 100
+m_operator_type = 0
 
 [sub_resource type="Resource" id="Resource_py45q"]
 script = ExtResource("3_ygbk7")

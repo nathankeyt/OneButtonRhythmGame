@@ -25,7 +25,7 @@ _data = {
 point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_n4gmo"]
-size = Vector3(0.8, 0.2, 0.8)
+size = Vector3(0.9, 0.01, 0.9)
 
 [node name="DanceFloor" type="Node3D"]
 metadata/_edit_group_ = true
@@ -53,8 +53,3 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.5
 [node name="DanceGrid" type="Node3D" parent="."]
 script = ExtResource("3_dec0i")
 mesh = SubResource("BoxMesh_n4gmo")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.00188498, 0.999998, 0, -0.999998, -0.00188498, 0, 12.5625, 0)
-visible = false
-light_energy = 0.1
