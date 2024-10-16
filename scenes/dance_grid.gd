@@ -107,10 +107,10 @@ func _input(event: InputEvent) -> void:
 			var beat_info: Array = note_queue.back()
 			var time_diff: float = beat_info[1] - get_time_sec()
 			
-			if time_diff < 0.0:
+			if time_diff <= 0.0:
 				note_queue.pop_back()
-				BattleManager.add_temp_player_score()
+				BattleManager.add_temp_player_score(1.0 + (time_diff / GlobalAudioManager.curr_beat_rate))
 				(beat_info[2] as FlagRef).flip()
 			
 		press_flag = FlagRef.new()
-		activate_circle(press_flag, 1, GlobalAudioManager.curr_beat_rate / 4.0, Color.BLUE)
+		activate_circle(press_flag, 1, 0.05, Color.BLUE)

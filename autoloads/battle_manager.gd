@@ -62,11 +62,11 @@ func add_enemy_score(score: int):
 func add_enemy(new_enemy: Enemy):
 	enemies.append(new_enemy)
 	
-func add_temp_player_score():
+func add_temp_player_score(acc: float):
 	if not curr_temp_score_partition:
 		return
 		
-	player_temp2_score += curr_temp_score_partition
+	player_temp2_score += curr_temp_score_partition * acc
 	p_temp_score_updated.emit(player_temp2_score)
 
 func add_temp_enemy_score():
