@@ -10,6 +10,7 @@ class_name Hand2D
 @export var select_threshold: float = 0.15
 @export var draw_length: float = 0.25
 @export var draw_delay: float = 0.1
+@export var battle_song: BattleSong
 
 @onready var display_path: Path2D = $DisplayPath
 @onready var select_timer: Timer = $SelectTimer
@@ -25,6 +26,7 @@ func _init() -> void:
 func _ready() -> void:
 	render_cards()
 	draw_cards(starter_draw_size)
+	GlobalAudioManager.play_battle_song(battle_song, 2.0)
 
 func add_card(card: CardRenderer2D) -> void:
 	if card:
@@ -73,11 +75,7 @@ func render_cards() -> void:
 			
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("test"):
-		print('test')
-		#draw_card()
-			  
-	if not cards.is_empty():
+	if BattleManager.is_card_phase() and not cards.is_empty():
 		if event.is_action_pressed("select"):
 			select_timer.start()
 			
@@ -115,11 +113,11 @@ func toggle_highlight_card(index: int) -> void:
 	
 	if card.z_index:
 		tween.parallel().tween_property(card, "scale", Vector2.ONE, highlight_speed)
-		tween.parallel().tween_property(card, "position:y", card.position.y + highlight_shift, highlight_speed)
+		tween.parallel().tween_property(card, "position:y", highlight_shift, highlight_speed)
 		card.z_index = 0
 	else:
 		tween.parallel().tween_property(card, "scale", Vector2.ONE * highlight_scale, highlight_speed)
-		tween.parallel().tween_property(card, "position:y", card.position.y - highlight_shift, highlight_speed)
+		tween.parallel().tween_property(card, "position:y", 0.0, highlight_speed)
 		card.z_index = 1
 
 func play_card(index: int) -> void:

@@ -1,30 +1,36 @@
-[gd_scene load_steps=20 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=21 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
+[ext_resource type="AudioStream" uid="uid://dthhm7laa0i4x" path="res://temp_song.ogg" id="3_oebis"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
-[ext_resource type="Script" path="res://classes/derived_effects/simple_operation.gd" id="5_7pjfp"]
+[ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
 [ext_resource type="Resource" uid="uid://dnw06mpoy2de5" path="res://resources/beat_tracks/default_beat_track.tres" id="5_u6sq3"]
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
-[ext_resource type="Script" path="res://scenes/total_score_label.gd" id="8_pmae1"]
-[ext_resource type="Script" path="res://scenes/temp_score_label.gd" id="9_67hft"]
+[ext_resource type="Script" path="res://classes/derived_effects/score_effect.gd" id="10_4ojwh"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
 
-[sub_resource type="Resource" id="Resource_ith5q"]
-script = ExtResource("5_7pjfp")
-m_amount = 100
-m_operator_type = 0
+[sub_resource type="Resource" id="Resource_472e0"]
+script = ExtResource("4_tni2y")
+audio_stream = ExtResource("3_oebis")
+bpm = 130.0
+
+[sub_resource type="Resource" id="Resource_honre"]
+script = ExtResource("10_4ojwh")
+m_amount = 200.0
+m_operator_type = 1
 
 [sub_resource type="Resource" id="Resource_py45q"]
 script = ExtResource("3_ygbk7")
 title = "Dougie"
 text = "Teach me how to dougie"
 cost = 1
-modifiable_effects = Array[ExtResource("4_rrtvn")]([SubResource("Resource_ith5q")])
+score_effect = SubResource("Resource_honre")
+modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 beat_track = ExtResource("5_u6sq3")
 
@@ -75,6 +81,7 @@ render_target_update_mode = 4
 
 [node name="Hand" parent="." instance=ExtResource("1_y3xwx")]
 position = Vector2(1280, 1221)
+battle_song = SubResource("Resource_472e0")
 
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2339, 1170)
@@ -106,12 +113,20 @@ theme_override_constants/separation = -50
 [node name="PlayerTotal" parent="ScoreContainer/PlayerScores" instance=ExtResource("7_aymrh")]
 layout_mode = 2
 text = "[center]0[/center]"
-script = ExtResource("8_pmae1")
+connected_score_signal = "p_score_settled"
+connected_operator_signal = "p_op_settled"
 
 [node name="PlayerTemp" parent="ScoreContainer/PlayerScores" instance=ExtResource("7_aymrh")]
 layout_mode = 2
-text = "[center]+0[/center]"
-script = ExtResource("9_67hft")
+text = ""
+connected_score_signal = "p_score_updated"
+connected_operator_signal = "p_op_updated"
+
+[node name="PlayerTemp2" parent="ScoreContainer/PlayerScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
+text = ""
+connected_score_signal = "p_temp_score_updated"
+connected_operator_signal = "p_temp_op_updated"
 
 [node name="EnemyScores" type="VBoxContainer" parent="ScoreContainer"]
 layout_mode = 2
@@ -120,14 +135,20 @@ theme_override_constants/separation = -50
 [node name="EnemyTotal" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
 layout_mode = 2
 text = "[center]0[/center]"
-script = ExtResource("8_pmae1")
-turn_type = 1
+connected_score_signal = "e_score_settled"
+connected_operator_signal = "e_op_settled"
 
 [node name="EnemyTemp" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
 layout_mode = 2
-text = "[center]+0[/center]"
-script = ExtResource("9_67hft")
-turn_type = 1
+text = ""
+connected_score_signal = "e_score_updated"
+connected_operator_signal = "e_op_updated"
+
+[node name="EnemyTemp2" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
+layout_mode = 2
+text = ""
+connected_score_signal = "e_temp_score_updated"
+connected_operator_signal = "e_temp_op_updated"
 
 [node name="ResourceBar" type="ProgressBar" parent="."]
 offset_left = 55.0

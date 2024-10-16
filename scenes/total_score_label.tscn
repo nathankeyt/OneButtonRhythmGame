@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2a6y3ig64vm0"]
 
 [ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="1_01tyg"]
-[ext_resource type="Script" path="res://scenes/score_label.gd" id="2_8q88e"]
+[ext_resource type="Script" path="res://classes/score_label.gd" id="2_8q88e"]
 
 [node name="ScoreLabel" type="RichTextLabel"]
 custom_minimum_size = Vector2(1000, 200)

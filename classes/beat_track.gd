@@ -1,7 +1,7 @@
 extends Resource
 class_name BeatTrack
 
-@export var beat_num: int = 16
+@export var beat_num: int = 16 
 @export var beats : Array[BattleManager.BeatType]
 
 var curr_beat: int = 0
