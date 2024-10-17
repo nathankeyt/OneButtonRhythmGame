@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=26 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
 [ext_resource type="Script" path="res://classes/derived_effects/score_effect.gd" id="10_4ojwh"]
+[ext_resource type="Script" path="res://classes/beat_track.gd" id="10_7ebrj"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
@@ -34,13 +35,25 @@ modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 beat_track = ExtResource("5_u6sq3")
 
+[sub_resource type="Resource" id="Resource_ab613"]
+script = ExtResource("10_7ebrj")
+beat_num = 16
+beats = Array[int]([1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1])
+
+[sub_resource type="Resource" id="Resource_4top2"]
+script = ExtResource("10_4ojwh")
+m_amount = 2.0
+m_operator_type = 3
+
 [sub_resource type="Resource" id="Resource_1rj1d"]
 script = ExtResource("3_ygbk7")
 title = "Two step"
 text = "Whats this one again"
 cost = 2
+score_effect = SubResource("Resource_4top2")
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+beat_track = SubResource("Resource_ab613")
 
 [sub_resource type="Resource" id="Resource_0l5yq"]
 script = ExtResource("3_ygbk7")
@@ -58,13 +71,25 @@ cost = 4
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 
+[sub_resource type="Resource" id="Resource_mc448"]
+script = ExtResource("10_7ebrj")
+beat_num = 4
+beats = Array[int]([1, 0, 1, 0])
+
+[sub_resource type="Resource" id="Resource_wvwx1"]
+script = ExtResource("10_4ojwh")
+m_amount = 100.0
+m_operator_type = 1
+
 [sub_resource type="Resource" id="Resource_awtrj"]
 script = ExtResource("3_ygbk7")
 title = "Floss"
 text = "Flossin"
 cost = 1
+score_effect = SubResource("Resource_wvwx1")
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
+beat_track = SubResource("Resource_mc448")
 
 [node name="Node2D" type="Node2D"]
 

@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://classes/beat_track.gd" id="1_upnj4"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_upnj4")
 beat_num = 16
-beats = Array[int]([1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
+beats = Array[int]([1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0])

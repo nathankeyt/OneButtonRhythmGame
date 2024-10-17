@@ -8,9 +8,14 @@ class_name Hand2D
 @export var max_hand_size: int = 5
 @export var starter_draw_size: int = 5
 @export var select_threshold: float = 0.15
+
 @export var draw_length: float = 0.25
 @export var draw_delay: float = 0.1
+
 @export var battle_song: BattleSong
+
+@export var hand_lower_distance: float = 300.0
+@export var hand_lower_time: float = 0.5
 
 @onready var display_path: Path2D = $DisplayPath
 @onready var select_timer: Timer = $SelectTimer
@@ -34,7 +39,7 @@ func add_card(card: CardRenderer2D) -> void:
 			hover_index += 1
 		cards.push_back(card)
 		render_cards()
-	
+
 func render_cards() -> void:
 	var hand_size: int = cards.size()
 	var last_index: int = hand_size - 1
@@ -72,10 +77,17 @@ func render_cards() -> void:
 			#curr_card.reparent(card_pos, false)
 			
 		display_path.move_child(card_pos, 0)
-			
+
+func lower_hand() -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(display_path, "position:y", display_path.position.y + hand_lower_distance, hand_lower_time).set_ease(Tween.EASE_IN_OUT)
+
+func raise_hand() -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(display_path, "position:y", display_path.position.y - hand_lower_distance, hand_lower_time).set_ease(Tween.EASE_IN_OUT)
 
 func _input(event: InputEvent) -> void:
-	if BattleManager.is_card_phase() and not cards.is_empty():
+	if BattleManager.is_player_card_phase() and not cards.is_empty():
 		if event.is_action_pressed("select"):
 			select_timer.start()
 			

@@ -5,23 +5,29 @@ class_name ScoreLabel
 @export_enum("p_temp_op_updated", "e_temp_op_updated", "p_op_updated", "e_op_updated", "p_op_settled", "e_op_settled") var connected_operator_signal: String
 
 var operator: String = ""
+var curr_op: Effect.OperatorType = 0
 
 func _ready() -> void:
 	BattleManager.connect(connected_score_signal, update_score)
 	BattleManager.connect(connected_operator_signal, update_operator)
 
 func update_score(amount: float):
-	text = "[center]" + operator + str(amount) + "[/center]"
+	if not amount:
+		text = ""
+		return
+		
+	text = "[center]" + operator + str(floor(amount) if BattleManager.is_main_op(curr_op) else snappedf(amount, 0.01)) + "[/center]"
 	
 func update_operator(operator_type: Effect.OperatorType):
+	curr_op = operator_type
 	match operator_type:
 		Effect.OperatorType.ADD:
 			operator = "+"
 		Effect.OperatorType.SUBTRACT:
 			operator = "-"
 		Effect.OperatorType.MULTIPLY:
-			operator = "+"
+			operator = "x"
 		Effect.OperatorType.DIVIDE:
-			operator = "+"
+			operator = "/"
 		_:
 			operator = ""

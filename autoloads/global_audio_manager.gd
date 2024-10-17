@@ -39,7 +39,7 @@ func play_SFX(new_stream: AudioStream, volume = 1.0, length = 0.0):
 	sfx_player.play()
 	
 	if length:
-		await get_tree().create_tvimer(length).timeout
+		await get_tree().create_timer(length).timeout
 	else:
 		await sfx_player.finished
 	

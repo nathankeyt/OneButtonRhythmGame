@@ -42,6 +42,9 @@ func generate_grid() -> void:
 			curr_arr.append(new_mesh_instance)
 
 func activate_circle(stop_flag: FlagRef, radius: int, duration: float = 1.0, color: Color = Color.RED):
+	if radius == 1:
+		press_flag.flag = false
+	
 	var materials: Array[StandardMaterial3D] = get_materials_at_radius(radius)
 	for material: StandardMaterial3D in materials:
 		material.emission = color
@@ -75,14 +78,19 @@ func get_time_sec():
 	return Time.get_ticks_msec() * 0.001
 
 func animate_circle(beat_type: BattleManager.BeatType):
+	print("animating circle")
 	var stop_flag = FlagRef.new()
-	note_queue.push_front([beat_type, get_time_sec() + (GlobalAudioManager.curr_beat_rate * (start_radius - 1)), stop_flag])
+	note_queue.push_front([beat_type, get_time_sec() + get_note_travel_time(), stop_flag])
 	match beat_type:
 		BattleManager.BeatType.STANDARD:
 			animate_standard(stop_flag, Color.WHITE if color_flag else Color.RED)
 			color_flag = !color_flag
 
+func get_note_travel_time() -> float:
+	return GlobalAudioManager.curr_beat_rate * (start_radius - 1)
+
 func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float = 1.0):
+	print ("animate standard")
 	for radius in total_radius / speed:
 		var curr_radius: int = total_radius - (radius * speed)
 		activate_circle(stop_flag, curr_radius, GlobalAudioManager.curr_beat_rate, color)
@@ -99,8 +107,9 @@ func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float
 	note_queue.pop_back()
 			
 
+
 func _input(event: InputEvent) -> void:
-	if BattleManager.is_dance_phase() and event.is_action_pressed("select"):
+	if BattleManager.is_player_dance_phase() and event.is_action_pressed("select"):
 		press_flag.flip()
 		
 		if not note_queue.is_empty():
@@ -109,7 +118,7 @@ func _input(event: InputEvent) -> void:
 			
 			if time_diff <= 0.0:
 				note_queue.pop_back()
-				BattleManager.add_temp_player_score(1.0 + (time_diff / GlobalAudioManager.curr_beat_rate))
+				BattleManager.add_player_score(1.0 + (time_diff / GlobalAudioManager.curr_beat_rate))
 				(beat_info[2] as FlagRef).flip()
 			
 		press_flag = FlagRef.new()
