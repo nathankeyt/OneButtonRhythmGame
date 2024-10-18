@@ -102,7 +102,7 @@ func execute_turn():
 				card_renderer.hide()
 			
 			for card_renderer: CardRenderer2D in played_cards:
-				var card: Card = card_renderer.card			
+				var card: Card = card_renderer.card		
 				
 				op_queue.push_front([card.score_effect.m_operator_type, card.get_score_partition()])
 				if first_flag:
@@ -125,6 +125,7 @@ func execute_turn():
 			p_score_settled.emit(player_total_score)
 			player_temp_score = 0.0
 			p_score_updated.emit(0.0)
+			reset_resources()
 			
 			curr_turn = TurnType.ENEMY
 			
@@ -142,6 +143,10 @@ func execute_turn():
 			curr_turn = TurnType.PLAYER
 			
 	curr_phase = PhaseType.CARD
+	
+func reset_resources():
+	curr_resources = max_resources
+	resource_updated.emit(curr_resources)
 	
 func pop_op_queue():
 	if player_temp2_score:

@@ -23,7 +23,7 @@ func set_img(img: ImageTexture) -> void:
 		img_sprite.texture = img
 	
 func set_title(title: String) -> void:
-	title_label.text = title
+	title_label.text = "[center]" + title + "[/center]"
 	
 func set_text(text: String) -> void:
 	text_label.text = text

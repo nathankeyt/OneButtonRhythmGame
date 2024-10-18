@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://dthhm7laa0i4x" path="res://temp_song.ogg" id="3_oebis"]
+[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://temp_song_decent_base.ogg" id="3_vkw6q"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
@@ -17,12 +17,12 @@
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
-audio_stream = ExtResource("3_oebis")
+audio_stream = ExtResource("3_vkw6q")
 bpm = 130.0
 
 [sub_resource type="Resource" id="Resource_honre"]
 script = ExtResource("10_4ojwh")
-m_amount = 200.0
+m_amount = 10000.0
 m_operator_type = 1
 
 [sub_resource type="Resource" id="Resource_py45q"]
@@ -42,14 +42,14 @@ beats = Array[int]([1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1])
 
 [sub_resource type="Resource" id="Resource_4top2"]
 script = ExtResource("10_4ojwh")
-m_amount = 2.0
+m_amount = 5.0
 m_operator_type = 3
 
 [sub_resource type="Resource" id="Resource_1rj1d"]
 script = ExtResource("3_ygbk7")
 title = "Two step"
 text = "Whats this one again"
-cost = 2
+cost = 1
 score_effect = SubResource("Resource_4top2")
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
@@ -152,28 +152,6 @@ layout_mode = 2
 text = ""
 connected_score_signal = "p_temp_score_updated"
 connected_operator_signal = "p_temp_op_updated"
-
-[node name="EnemyScores" type="VBoxContainer" parent="ScoreContainer"]
-layout_mode = 2
-theme_override_constants/separation = -50
-
-[node name="EnemyTotal" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
-layout_mode = 2
-text = "[center]0[/center]"
-connected_score_signal = "e_score_settled"
-connected_operator_signal = "e_op_settled"
-
-[node name="EnemyTemp" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
-layout_mode = 2
-text = ""
-connected_score_signal = "e_score_updated"
-connected_operator_signal = "e_op_updated"
-
-[node name="EnemyTemp2" parent="ScoreContainer/EnemyScores" instance=ExtResource("7_aymrh")]
-layout_mode = 2
-text = ""
-connected_score_signal = "e_temp_score_updated"
-connected_operator_signal = "e_temp_op_updated"
 
 [node name="ResourceBar" type="ProgressBar" parent="."]
 offset_left = 55.0
