@@ -215,7 +215,8 @@ var _silent_running: bool
 var _rhythms: Array[_Rhythm] = []
 
 func _init() -> void:
-	GlobalAudioManager.beat_manager = self
+	if not Engine.is_editor_hint():
+		GlobalAudioManager.beat_manager = self
 
 func _ready():
 	beats(1.0).connect(beat.emit)

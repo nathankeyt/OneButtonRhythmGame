@@ -3,5 +3,6 @@
 [ext_resource type="FontFile" uid="uid://cnracy6dffo0o" path="res://resources/fonts/A4SPEED-Bold.ttf" id="1_qs4gn"]
 
 [resource]
+default_font = ExtResource("1_qs4gn")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/font_sizes/normal_font_size = 128
-RichTextLabel/fonts/normal_font = ExtResource("1_qs4gn")

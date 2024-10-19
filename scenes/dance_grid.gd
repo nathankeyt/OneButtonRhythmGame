@@ -41,19 +41,24 @@ func generate_grid() -> void:
 			
 			curr_arr.append(new_mesh_instance)
 
-func activate_circle(stop_flag: FlagRef, radius: int, duration: float = 1.0, color: Color = Color.RED):
-	if radius == 1:
-		press_flag.flag = false
+func activate_circle(stop_flag: FlagRef, radius: int, color: Color = Color.RED, duration: float = 0.0, is_user_activated: bool = false):
+	if radius == 1 and not is_user_activated:
+		press_flag.flag = true
 	
 	var materials: Array[StandardMaterial3D] = get_materials_at_radius(radius)
 	for material: StandardMaterial3D in materials:
 		material.emission = color
 		material.emission_enabled = true
 	
-	await GlobalAudioManager.beat_played
+	if duration:
+		await get_tree().create_timer(duration).timeout
+	else:
+		await GlobalAudioManager.beat_played
 	
 	if not stop_flag.flag:
 		deactive_materials(materials)
+	elif color == Color.BLUE:
+		print(color)
 	
 		
 func deactivate_circle(radius: int):
@@ -83,7 +88,7 @@ func animate_circle(beat_type: BattleManager.BeatType):
 	note_queue.push_front([beat_type, get_time_sec() + get_note_travel_time(), stop_flag])
 	match beat_type:
 		BattleManager.BeatType.STANDARD:
-			animate_standard(stop_flag, Color.WHITE if color_flag else Color.RED)
+			animate_standard(stop_flag, Color.DEEP_PINK if color_flag else Color.PURPLE)
 			color_flag = !color_flag
 
 func get_note_travel_time() -> float:
@@ -93,7 +98,7 @@ func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float
 	print ("animate standard")
 	for radius in total_radius / speed:
 		var curr_radius: int = total_radius - (radius * speed)
-		activate_circle(stop_flag, curr_radius, GlobalAudioManager.curr_beat_rate, color)
+		activate_circle(stop_flag, curr_radius, color)
 		
 		var deactivate_function := func(): deactivate_circle(curr_radius)
 		stop_flag.flag_change.connect(deactivate_function)
@@ -110,7 +115,7 @@ func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float
 
 func _input(event: InputEvent) -> void:
 	if BattleManager.is_player_dance_phase() and event.is_action_pressed("select"):
-		press_flag.flip()
+		press_flag.flag = true
 		
 		if not note_queue.is_empty():
 			var beat_info: Array = note_queue.back()
@@ -122,4 +127,4 @@ func _input(event: InputEvent) -> void:
 				(beat_info[2] as FlagRef).flip()
 			
 		press_flag = FlagRef.new()
-		activate_circle(press_flag, 1, 0.05, Color.BLUE)
+		activate_circle(press_flag, 1, Color.BLUE, 0.05, true)

@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://drmnwgnq0lshg"]
 
-[ext_resource type="FontFile" uid="uid://cl6phf478yjus" path="res://Satoshi-Bold.otf" id="1_ipa2o"]
+[ext_resource type="FontFile" uid="uid://cl6phf478yjus" path="res://resources/fonts/Satoshi-Bold.otf" id="1_ipa2o"]
 
 [resource]
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)

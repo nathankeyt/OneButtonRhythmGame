@@ -1,8 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=25 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://temp_song_decent_base.ogg" id="3_vkw6q"]
+[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://resources/audio_streams/temp_song_decent_base.ogg" id="3_vkw6q"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
@@ -29,7 +29,7 @@ m_operator_type = 1
 [sub_resource type="Resource" id="Resource_py45q"]
 script = ExtResource("3_ygbk7")
 title = "Dougie"
-text = "Teach me how to dougie"
+text = "Teach me how to dougie."
 cost = 1
 score_effect = SubResource("Resource_honre")
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
@@ -49,28 +49,12 @@ m_operator_type = 3
 [sub_resource type="Resource" id="Resource_1rj1d"]
 script = ExtResource("3_ygbk7")
 title = "Two step"
-text = "Whats this one again"
+text = "Whats this one again."
 cost = 1
 score_effect = SubResource("Resource_4top2")
 modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 beat_track = SubResource("Resource_ab613")
-
-[sub_resource type="Resource" id="Resource_0l5yq"]
-script = ExtResource("3_ygbk7")
-title = "Nay Nay"
-text = ""
-cost = 0
-modifiable_effects = Array[ExtResource("4_rrtvn")]([])
-unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
-
-[sub_resource type="Resource" id="Resource_11e8j"]
-script = ExtResource("3_ygbk7")
-title = "Whip"
-text = ""
-cost = 4
-modifiable_effects = Array[ExtResource("4_rrtvn")]([])
-unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 
 [sub_resource type="Resource" id="Resource_mc448"]
 script = ExtResource("10_7ebrj")
@@ -99,6 +83,7 @@ offset_right = 2560.0
 offset_bottom = 1440.0
 
 [node name="DanceFloorViewport" type="SubViewport" parent="DanceFloorContainer"]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(2560, 1440)
 render_target_update_mode = 4
@@ -112,7 +97,7 @@ battle_song = SubResource("Resource_472e0")
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2339, 1170)
 scale = Vector2(1, 1.0021)
-cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_0l5yq"), SubResource("Resource_11e8j"), SubResource("Resource_awtrj")])
+cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_awtrj")])
 card_renderer_scene = ExtResource("6_xowa6")
 
 [node name="PlayedCards" type="HBoxContainer" parent="."]

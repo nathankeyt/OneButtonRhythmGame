@@ -1,4 +1,0 @@
-[gd_scene format=3 uid="uid://c6vfo6vuxooid"]
-
-[node name="CardContainer" type="Node2D"]
-position = Vector2(192, 260.12)

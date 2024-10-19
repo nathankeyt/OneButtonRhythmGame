@@ -26,7 +26,17 @@ func set_title(title: String) -> void:
 	title_label.text = "[center]" + title + "[/center]"
 	
 func set_text(text: String) -> void:
-	text_label.text = text
+	text_label.text = text + "\n"
+	
+	if not card.score_effect:
+		return
+		
+	var amount: float = card.score_effect.m_amount
+	match card.score_effect.m_operator_type:
+		Effect.OperatorType.ADD:
+			text_label.text += "Add up to " + str(floor(amount)) + " score."
+		Effect.OperatorType.MULTIPLY:
+			text_label.text += "Add up to " + str(snapped(amount, 0.01)) + " multiplier."
 	
 func set_cost(cost: int) -> void:
 	cost_label.text = str(cost)

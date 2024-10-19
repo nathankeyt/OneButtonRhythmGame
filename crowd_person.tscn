@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1qq4q3hyhob7"]
+
+[ext_resource type="PackedScene" uid="uid://j0q3bf4poja4" path="res://resources/meshes/crowd_person.glb" id="1_ua5yd"]
+
+[node name="crowd_person" instance=ExtResource("1_ua5yd")]

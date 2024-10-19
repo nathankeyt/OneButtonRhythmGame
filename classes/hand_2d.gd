@@ -87,7 +87,7 @@ func raise_hand() -> void:
 	tween.tween_property(display_path, "position:y", display_path.position.y - hand_lower_distance, hand_lower_time).set_ease(Tween.EASE_IN_OUT)
 
 func _input(event: InputEvent) -> void:
-	if BattleManager.is_player_card_phase() and not cards.is_empty():
+	if BattleManager.is_player_card_phase():
 		if event.is_action_pressed("select"):
 			select_timer.start()
 			
@@ -101,7 +101,6 @@ func _input(event: InputEvent) -> void:
 
 func increment_hover() -> void:
 	if cards.size() <= 0:
-		hover_index = -1
 		return
 	
 	if hover_index != -1:
@@ -125,11 +124,11 @@ func toggle_highlight_card(index: int) -> void:
 	
 	if card.z_index:
 		tween.parallel().tween_property(card, "scale", Vector2.ONE, highlight_speed)
-		tween.parallel().tween_property(card, "position:y", highlight_shift, highlight_speed)
+		tween.parallel().tween_property(card, "position:y", card.position.y + highlight_shift, highlight_speed)
 		card.z_index = 0
 	else:
 		tween.parallel().tween_property(card, "scale", Vector2.ONE * highlight_scale, highlight_speed)
-		tween.parallel().tween_property(card, "position:y", 0.0, highlight_speed)
+		tween.parallel().tween_property(card, "position:y", card.position.y - highlight_shift, highlight_speed)
 		card.z_index = 1
 
 func play_card(index: int) -> void:

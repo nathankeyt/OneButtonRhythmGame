@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkgjbt6x7o4up"]
 
 [ext_resource type="Script" path="res://demos/show_spectrum.gd" id="1_y8p70"]
-[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://temp_song_decent_base.ogg" id="2_xet6u"]
+[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://resources/audio_streams/temp_song_decent_base.ogg" id="2_xet6u"]
 
 [node name="ShowSpectrum" type="Node2D"]
 position = Vector2(136, 80)
