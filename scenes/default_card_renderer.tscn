@@ -78,7 +78,7 @@ render_target_update_mode = 4
 [node name="CardContainer" type="Node2D" parent="CardFront/SubViewport"]
 position = Vector2(192, 256.39)
 
-[node name="Group2" type="Sprite2D" parent="CardFront/SubViewport/CardContainer"]
+[node name="BackdropSprite" type="Sprite2D" parent="CardFront/SubViewport/CardContainer"]
 modulate = Color(0.857342, 0.835333, 1, 1)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("3_uhhg1")

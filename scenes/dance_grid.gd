@@ -50,7 +50,7 @@ func activate_circle(stop_flag: FlagRef, radius: int, duration: float = 1.0, col
 		material.emission = color
 		material.emission_enabled = true
 	
-	await get_tree().create_timer(duration).timeout
+	await GlobalAudioManager.beat_played
 	
 	if not stop_flag.flag:
 		deactive_materials(materials)
