@@ -1,9 +1,14 @@
-[gd_resource type="Resource" script_class="BeatTrack" load_steps=2 format=3 uid="uid://dnw06mpoy2de5"]
+[gd_resource type="Resource" script_class="BeatTrack" load_steps=5 format=3 uid="uid://dnw06mpoy2de5"]
 
+[ext_resource type="Script" path="res://classes/note.gd" id="1_ll1dh"]
 [ext_resource type="Script" path="res://classes/beat_track.gd" id="1_upnj4"]
+[ext_resource type="Resource" uid="uid://jb56d4hx8r5q" path="res://resources/notes/kick.tres" id="2_8242u"]
+[ext_resource type="Resource" uid="uid://y2ahx51c8s2y" path="res://resources/notes/scoring_clap.tres" id="3_egi23"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_upnj4")
-beat_num = 16
-beats = Array[int]([1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0])
+beat_num = 8
+beats = Array[ExtResource("1_ll1dh")]([ExtResource("2_8242u"), null, ExtResource("2_8242u"), null, ExtResource("3_egi23")])
+bpm = 100.0
+repetions = 4

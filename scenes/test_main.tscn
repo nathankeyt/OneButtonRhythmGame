@@ -1,8 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=36 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://dthhm7laa0i4x" path="res://resources/audio_streams/temp_song.ogg" id="3_bxd16"]
+[ext_resource type="AudioStream" uid="uid://dh1c4j86513ud" path="res://resources/audio_streams/base_track.ogg" id="3_ji3yy"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://classes/derived_effects/score_effect.gd" id="10_4ojwh"]
 [ext_resource type="Script" path="res://classes/beat_track.gd" id="10_7ebrj"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
+[ext_resource type="Script" path="res://classes/note.gd" id="10_xfunt"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
 [ext_resource type="Shader" path="res://scenes/bar.gdshader" id="13_4ot5w"]
@@ -21,8 +22,8 @@
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
-audio_stream = ExtResource("3_bxd16")
-bpm = 130.0
+audio_stream = ExtResource("3_ji3yy")
+bpm = 100.0
 
 [sub_resource type="Resource" id="Resource_honre"]
 script = ExtResource("10_4ojwh")
@@ -42,7 +43,9 @@ beat_track = ExtResource("5_u6sq3")
 [sub_resource type="Resource" id="Resource_ab613"]
 script = ExtResource("10_7ebrj")
 beat_num = 16
-beats = Array[int]([1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0])
+beats = Array[ExtResource("10_xfunt")]([])
+bpm = 130.0
+repetitions = 4
 
 [sub_resource type="Resource" id="Resource_4top2"]
 script = ExtResource("10_4ojwh")
@@ -62,7 +65,9 @@ beat_track = SubResource("Resource_ab613")
 [sub_resource type="Resource" id="Resource_mc448"]
 script = ExtResource("10_7ebrj")
 beat_num = 4
-beats = Array[int]([1, 0, 1, 0])
+beats = Array[ExtResource("10_xfunt")]([])
+bpm = 130.0
+repetitions = 4
 
 [sub_resource type="Resource" id="Resource_wvwx1"]
 script = ExtResource("10_4ojwh")
@@ -126,7 +131,7 @@ shader_parameter/use_value_gradient = false
 shader_parameter/invert = false
 shader_parameter/gradient_x = SubResource("GradientTexture1D_i3b7j")
 
-[node name="Node2D" type="Node2D"]
+[node name="Main" type="Node2D"]
 
 [node name="DanceFloorContainer" type="SubViewportContainer" parent="."]
 offset_right = 2560.0

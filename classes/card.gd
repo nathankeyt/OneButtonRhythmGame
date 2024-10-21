@@ -32,9 +32,6 @@ func get_num_beats():
 	if not beat_track:
 		return
 		
-	for beat: BattleManager.BeatType in beat_track.beats:
-		match beat:
-			BattleManager.BeatType.STANDARD:
-				num_beats += 1
-			_:
-				pass
+	for beat: Note in beat_track.beats:
+		if beat:
+			num_beats += 1

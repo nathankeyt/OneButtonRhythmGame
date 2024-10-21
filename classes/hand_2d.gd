@@ -31,7 +31,7 @@ func _init() -> void:
 func _ready() -> void:
 	render_cards()
 	draw_cards(starter_draw_size)
-	GlobalAudioManager.play_battle_song(battle_song, 2.0)
+	GlobalAudioManager.play_battle_song(battle_song, -100.0)
 
 func add_card(card: CardRenderer2D) -> void:
 	if card:

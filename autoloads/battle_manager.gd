@@ -3,7 +3,7 @@ extends Node
 enum BeatType {NONE, STANDARD}
 enum TurnType {PLAYER = 0, ENEMY = 1}
 enum PhaseType {CARD = 0, DANCE = 1}
-enum AccType {PERFECT, SUPER, AWESOME, NICE, OK}
+enum AccType {PERFECT, EARLY, LATE}
 
 var curr_turn: TurnType = TurnType.PLAYER
 var curr_phase: PhaseType = PhaseType.CARD
@@ -51,9 +51,14 @@ signal turn_ended(turn_type: TurnType)
 
 signal resource_updated(amount: int)
 
-signal note_played(beat_type: BeatType, beat_value: int)
+signal note_played(beat_type: Note, beat_value: int)
 signal track_ended
-signal note_hit(acc: float)
+signal note_hit(acc: AccType, is_early: bool)
+
+var is_next_note_scoring: bool = false
+var was_last_note_scoring: bool = false
+var late_flag: bool = false
+var nearest_note: Note
 
 var curr_op: Effect.OperatorType = 0
 
@@ -212,33 +217,68 @@ func play_beat_track(card: Card):
 	if not beat_track:
 		return
 		
-	while(true):
-		await GlobalAudioManager.beat_played
-		var beat_type: BeatType = beat_track.get_curr_beat()
-		match beat_type:
-			BeatType.NONE:
-				pass
-			_:
-				print(beat_type)
-				note_played.emit(beat_type)
-				
-		if not beat_track.increment_beat(): 
-			print("break")
-			break
+	GlobalAudioManager.set_bpm(beat_track.bpm)
+	
+	for repetitions: int in beat_track.repetitions:
+		while(true):
+			var note: Note = beat_track.get_curr_beat()
+			
+			if note:
+				late_flag = false
+				is_next_note_scoring = note.is_scoring
+				if is_next_note_scoring:
+					nearest_note = note
+			else:
+				is_next_note_scoring = false
+			
+			await GlobalAudioManager.quarter_beat_played
+			
+			if note:
+				if not note.is_scoring:
+					note_played.emit(note)
+				note.play()
+					
+			if not beat_track.increment_beat(): 
+				print("break")
+				beat_track.reset_beat()
+				break
+		
+			was_last_note_scoring = is_next_note_scoring
+			if was_last_note_scoring:
+				nearest_note = note
+				late_flag = true
 	
 	track_ended.emit()
 	
-func get_acc_type(acc: float) -> AccType:
-	if acc > 0.9:
-		return AccType.PERFECT
-	elif acc > 0.7:
-		return AccType.SUPER
-	elif acc > 0.5:
-		return AccType.AWESOME
-	elif acc > 0.3:
-		return AccType.NICE
+func _input(event: InputEvent) -> void:
+	if is_player_dance_phase() and event.is_action_pressed("select"):
+		handle_hit()
 	
-	return AccType.OK
+func handle_hit():
+	#if nearest_note:
+		#nearest_note.play()
+	
+	var acc: float;
+	if is_next_note_scoring:
+		acc = GlobalAudioManager.distance_to_quarter_beat()
+	elif was_last_note_scoring:
+		acc = -GlobalAudioManager.distance_from_quarter_beat()
+	elif late_flag:
+		note_hit.emit(AccType.LATE)
+		return
+	else:
+		note_hit.emit(AccType.EARLY)
+		return
+	
+	note_hit.emit(get_acc_type(acc), acc > 0.0)
+	
+func get_acc_type(time_diff: float) -> AccType:
+	if time_diff >= 0.5:
+		return AccType.EARLY
+	elif time_diff > -0.5:
+		return AccType.PERFECT
+	
+	return AccType.LATE
 			
 func is_player_card_phase() -> bool:
 	return curr_phase == PhaseType.CARD and curr_turn == TurnType.PLAYER

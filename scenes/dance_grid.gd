@@ -24,7 +24,7 @@ func _init() -> void:
 func _ready() -> void:
 	generate_grid()
 	BattleManager.note_played.connect(animate_circle)
-	animate_circle(BattleManager.BeatType.STANDARD)
+	BattleManager.note_hit.connect(animate_hit)
 
 func generate_grid() -> void:
 	hit_mesh_material = StandardMaterial3D.new()
@@ -65,7 +65,7 @@ func activate_circle(stop_flag: FlagRef, radius: int, color: Color = Color.RED, 
 	if duration:
 		await get_tree().create_timer(duration).timeout
 	else:
-		await GlobalAudioManager.beat_played
+		await GlobalAudioManager.quarter_beat_played
 	
 	if is_user_activated:
 		hit_mesh_material.emission_enabled = false
@@ -99,28 +99,35 @@ func get_materials_at_radius(radius: int):
 func get_time_sec():
 	return Time.get_ticks_msec() * 0.001
 
-func animate_circle(beat_type: BattleManager.BeatType):
-	print("animating circle")
+func animate_hit(acc: BattleManager.AccType, is_early: bool = false):
+	var stop_flag = FlagRef.new()
+	match acc:
+		BattleManager.AccType.PERFECT:
+			if is_early:
+				await GlobalAudioManager.quarter_beat_played
+			animate_standard(stop_flag, Color.BLUE)
+		_:
+			animate_standard(stop_flag, Color.RED)
+
+func animate_circle(beat_type: Note):
 	var stop_flag = FlagRef.new()
 	note_queue.push_front([beat_type, get_time_sec() + get_note_travel_time(), stop_flag])
-	match beat_type:
-		BattleManager.BeatType.STANDARD:
-			animate_standard(stop_flag, Color.DEEP_PINK if color_flag else Color.PURPLE)
-			color_flag = !color_flag
+	
+	animate_standard(stop_flag, Color.DEEP_PINK if color_flag else Color.PURPLE)
+	color_flag = !color_flag
 
 func get_note_travel_time() -> float:
 	return GlobalAudioManager.curr_beat_rate * (start_radius - 1)
 
-func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float = 1.0):
-	print ("animate standard")
-	for radius in total_radius / speed:
-		var curr_radius: int = total_radius - (radius * speed)
+func animate_standard(stop_flag: FlagRef, color: Color = Color.RED):
+	for radius in total_radius - 1:
+		var curr_radius: int = radius + 1
 		activate_circle(stop_flag, curr_radius, color)
 		
 		var deactivate_function := func(): deactivate_circle(curr_radius)
 		stop_flag.flag_change.connect(deactivate_function)
 		
-		await GlobalAudioManager.beat_played
+		await GlobalAudioManager.quarter_beat_played
 		
 		stop_flag.flag_change.disconnect(deactivate_function)
 		if stop_flag.flag:
@@ -130,18 +137,18 @@ func animate_standard(stop_flag: FlagRef, color: Color = Color.RED, speed: float
 			
 
 
-func _input(event: InputEvent) -> void:
-	if BattleManager.is_player_dance_phase() and event.is_action_pressed("select"):
-		press_flag.flag = true
-		
-		if not note_queue.is_empty():
-			var beat_info: Array = note_queue.back()
-			var time_diff: float = beat_info[1] - get_time_sec()
-			
-			if time_diff <= 0.0:
-				note_queue.pop_back()
-				BattleManager.add_player_score(1.0 + (time_diff / GlobalAudioManager.curr_beat_rate))
-				(beat_info[2] as FlagRef).flip()
-			
-		press_flag = FlagRef.new()
-		activate_circle(press_flag, 1, Color.BLUE, 0.05, true)
+#func _input(event: InputEvent) -> void:
+	#if BattleManager.is_player_dance_phase() and event.is_action_pressed("select"):
+		#press_flag.flag = true
+		#
+		#if not note_queue.is_empty():
+			#var beat_info: Array = note_queue.back()
+			#var time_diff: float = beat_info[1] - get_time_sec()
+			#
+			#if time_diff <= 0.0:
+				#note_queue.pop_back()
+				#BattleManager.add_player_score(1.0 + (time_diff / GlobalAudioManager.curr_beat_rate))
+				#(beat_info[2] as FlagRef).flip()
+			#
+		#press_flag = FlagRef.new()
+		#activate_circle(press_flag, 1, Color.BLUE, 0.05, true)
