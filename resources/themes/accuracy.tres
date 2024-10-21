@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bpp8lnpgdhw8l"]
+
+[ext_resource type="FontFile" uid="uid://cnracy6dffo0o" path="res://resources/fonts/A4SPEED-Bold.ttf" id="1_cwd6n"]
+
+[resource]
+default_font = ExtResource("1_cwd6n")
+default_font_size = 70
+RichTextLabel/constants/outline_size = 10

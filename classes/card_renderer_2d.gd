@@ -3,7 +3,7 @@ class_name CardRenderer2D
 
 @export var card: Card
 @export var card_front: SubViewportContainer
-@export var card_backing: Sprite2D
+@export var card_backing: SubViewportContainer
 @export var img_sprite: Sprite2D
 @export var title_label: RichTextLabel
 @export var text_label: RichTextLabel

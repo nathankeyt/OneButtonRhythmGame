@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bocijqbryevvx"]
+
+[ext_resource type="Theme" uid="uid://bpp8lnpgdhw8l" path="res://resources/themes/accuracy.tres" id="1_3ryvj"]
+
+[node name="AccuracyLabel" type="RichTextLabel"]
+offset_left = -1.0
+offset_right = 638.0
+offset_bottom = 94.0
+theme = ExtResource("1_3ryvj")
+text = " PERFECT!"

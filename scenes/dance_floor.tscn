@@ -1,11 +1,16 @@
-[gd_scene load_steps=22 format=4 uid="uid://duu8oi1tvej58"]
+[gd_scene load_steps=25 format=4 uid="uid://duu8oi1tvej58"]
 
 [ext_resource type="ArrayMesh" uid="uid://ba5riraj0veti" path="res://resources/meshes/floor.obj" id="1_a3pwo"]
+[ext_resource type="Script" path="res://scenes/dance_floor.gd" id="1_kwv02"]
 [ext_resource type="Script" path="res://scenes/spot_lights_container.gd" id="1_nytvl"]
 [ext_resource type="PackedScene" uid="uid://f3oi3l5bq6kv" path="res://scenes/player.tscn" id="1_x2i6q"]
 [ext_resource type="PackedScene" uid="uid://cktcm1p5yr7gg" path="res://scenes/enemy.tscn" id="2_55713"]
 [ext_resource type="Script" path="res://scenes/dance_grid.gd" id="3_dec0i"]
 [ext_resource type="Script" path="res://scenes/audience.gd" id="4_och8g"]
+
+[sub_resource type="Gradient" id="Gradient_uuulb"]
+offsets = PackedFloat32Array(0.145125, 0.498866, 0.852608)
+colors = PackedColorArray(0.882353, 0, 0.87451, 1, 0, 0, 1, 1, 0.882353, 0, 0.87451, 1)
 
 [sub_resource type="Environment" id="Environment_8xcbi"]
 background_color = Color(1, 1, 1, 1)
@@ -51,12 +56,15 @@ point_count = 2
 [sub_resource type="BoxMesh" id="BoxMesh_n4gmo"]
 size = Vector3(0.9, 0.01, 0.9)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqvts"]
-albedo_color = Color(0.688876, 0.699526, 0.728816, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_i0k5j"]
+size = Vector2(2.2, 2.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gtd41"]
+albedo_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_rixe7"]
-material = SubResource("StandardMaterial3D_cqvts")
-size = Vector2(2.1, 2.1)
+material = SubResource("StandardMaterial3D_gtd41")
+size = Vector2(1.9, 1.9)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0fpir"]
 diffuse_mode = 3
@@ -90,49 +98,62 @@ buffer = PackedFloat32Array(0.287253, 0, -0.958899, 20.9294, 0, 1.001, 0, 0.1290
 [sub_resource type="PlaneMesh" id="PlaneMesh_v1wcv"]
 
 [node name="DanceFloor" type="Node3D"]
+script = ExtResource("1_kwv02")
+light_gradient = SubResource("Gradient_uuulb")
+color_change_rate = 0.1
 metadata/_edit_group_ = true
 
 [node name="MainSpotLight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, 0.153656, 8.64035, 0.159158)
-light_color = Color(1, 0.788235, 0.976471, 1)
+light_color = Color(1, 0.848486, 0.986933, 1)
 light_energy = 2.0
 spot_range = 4096.0
 spot_angle = 56.0
 
-[node name="SpotLightsContainer" type="Node3D" parent="."]
+[node name="SpotLightContainer" type="Node3D" parent="."]
 transform = Transform3D(0.997102, 0, 0, 0, 0.997102, 0, 0, 0, 0.997102, 0, 0, 0)
 script = ExtResource("1_nytvl")
 color = Color(0.881182, 0.000583537, 0.874129, 1)
 energy = 5.0
 fog_energy = 16.0
 
-[node name="SpotLight3D" type="SpotLight3D" parent="SpotLightsContainer"]
+[node name="SpotLight3D" type="SpotLight3D" parent="SpotLightContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, -13.7378, 8.64035, -14.3558)
-light_color = Color(1, 0.787756, 0.977594, 1)
+light_color = Color(0.881182, 0.000583537, 0.874129, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
 spot_range = 4096.0
 spot_angle = 26.25
 
-[node name="SpotLight3D4" type="SpotLight3D" parent="SpotLightsContainer"]
+[node name="SpotLight3D4" type="SpotLight3D" parent="SpotLightContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, -13.7378, 8.64035, -0.832492)
-light_color = Color(1, 0.788235, 0.976471, 1)
+light_color = Color(0.881182, 0.000583537, 0.874129, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
 spot_range = 4096.0
 spot_angle = 26.25
 
-[node name="SpotLight3D5" type="SpotLight3D" parent="SpotLightsContainer"]
+[node name="SpotLight3D5" type="SpotLight3D" parent="SpotLightContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, 14.7945, 8.64035, -0.832492)
-light_color = Color(1, 0.788235, 0.976471, 1)
+light_color = Color(0.881182, 0.000583537, 0.874129, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
 spot_range = 4096.0
 spot_angle = 26.25
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="SpotLightsContainer"]
+[node name="SpotLight3D2" type="SpotLight3D" parent="SpotLightContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, 0.153656, 8.64035, -14.3558)
-light_color = Color(1, 0.788235, 0.976471, 1)
+light_color = Color(0.881182, 0.000583537, 0.874129, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
 spot_range = 4096.0
 spot_angle = 26.25
 
-[node name="SpotLight3D3" type="SpotLight3D" parent="SpotLightsContainer"]
+[node name="SpotLight3D3" type="SpotLight3D" parent="SpotLightContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.0279565, 0.999609, 0, -0.999609, 0.0279565, 15.4244, 8.64035, -14.3558)
-light_color = Color(1, 0.788235, 0.976471, 1)
+light_color = Color(0.881182, 0.000583537, 0.874129, 1)
+light_energy = 5.0
+light_volumetric_fog_energy = 16.0
 spot_range = 4096.0
 spot_angle = 26.25
 
@@ -168,13 +189,19 @@ curve = SubResource("Curve3D_ij4mt")
 [node name="Enemy" parent="EnemyPath" instance=ExtResource("2_55713")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.5, 0)
 
-[node name="DanceGrid" type="Node3D" parent="."]
+[node name="DanceGrid" type="Node3D" parent="." node_paths=PackedStringArray("hit_mesh")]
 script = ExtResource("3_dec0i")
 mesh = SubResource("BoxMesh_n4gmo")
+hit_mesh = NodePath("../HitSquare")
 
 [node name="HitSquare" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.996077, 0, 0, 0, 0.996077, 0, 0, 0, 0.996077, 0, 0.001, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00629687, 0.001, 0)
+mesh = SubResource("PlaneMesh_i0k5j")
+
+[node name="HitSquareInner" type="MeshInstance3D" parent="HitSquare"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0011948, 0)
 mesh = SubResource("PlaneMesh_rixe7")
+skeleton = NodePath("../..")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 

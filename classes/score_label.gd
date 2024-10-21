@@ -15,8 +15,12 @@ func _ready() -> void:
 
 func update_score(amount: float):
 	if not amount:
+		prev_score = 0.0 
 		text = ""
 		return
+		
+	if text == "" and connected_score_signal == "p_temp_score_updated":
+		prev_score = 1.0
 	
 	var tween: Tween = create_tween()
 	tween.tween_method(set_text_val, prev_score, amount, GlobalAudioManager.curr_beat_rate)

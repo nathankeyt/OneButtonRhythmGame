@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1gwaqsqntkgf"]
 
 [ext_resource type="Script" path="res://classes/deck_2d.gd" id="1_76t5r"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_vbxf3"]
+[ext_resource type="Texture2D" uid="uid://bkrqltpike6m6" path="res://backing.png" id="2_5as6p"]
 
 [node name="DefaultDeck" type="Node2D"]
 script = ExtResource("1_76t5r")
 
-[node name="CardBacking" type="Sprite2D" parent="."]
-scale = Vector2(384, 512)
-texture = SubResource("CanvasTexture_vbxf3")
+[node name="Backing" type="Sprite2D" parent="."]
+modulate = Color(0.858824, 0.835294, 1, 1)
+scale = Vector2(0.81, 0.81)
+texture = ExtResource("2_5as6p")

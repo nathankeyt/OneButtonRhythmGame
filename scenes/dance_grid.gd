@@ -6,6 +6,7 @@ class_name DanceGrid
 @export var grid_size: int = 12
 @export var start_radius: int = 9
 @export var end_radius: int = 0
+@export var hit_mesh: MeshInstance3D
 
 @onready var total_radius: int = start_radius - end_radius
 @onready var center: float = ((grid_size - 1) * cell_size) / 2.0
@@ -14,6 +15,7 @@ class_name DanceGrid
 var grid: Array[Array]
 var color_flag: bool = true
 var note_queue: Array[Array]
+var hit_mesh_material: StandardMaterial3D
 
 
 func _init() -> void:
@@ -25,6 +27,11 @@ func _ready() -> void:
 	animate_circle(BattleManager.BeatType.STANDARD)
 
 func generate_grid() -> void:
+	hit_mesh_material = StandardMaterial3D.new()
+	hit_mesh_material.emission_energy_multiplier = 1.0
+	hit_mesh_material.albedo_color = Color.GRAY
+	hit_mesh.set_surface_override_material(0, hit_mesh_material)
+	
 	for x in grid_size:
 		var curr_arr: Array[MeshInstance3D] = []
 		grid.append(curr_arr)
@@ -44,21 +51,31 @@ func generate_grid() -> void:
 func activate_circle(stop_flag: FlagRef, radius: int, color: Color = Color.RED, duration: float = 0.0, is_user_activated: bool = false):
 	if radius == 1 and not is_user_activated:
 		press_flag.flag = true
-	
+		
 	var materials: Array[StandardMaterial3D] = get_materials_at_radius(radius)
-	for material: StandardMaterial3D in materials:
-		material.emission = color
-		material.emission_enabled = true
+	
+	if is_user_activated:
+		hit_mesh_material.emission = color
+		hit_mesh_material.emission_enabled = true
+	else:
+		for material: StandardMaterial3D in materials:
+			material.emission = color
+			material.emission_enabled = true
 	
 	if duration:
 		await get_tree().create_timer(duration).timeout
 	else:
 		await GlobalAudioManager.beat_played
 	
-	if not stop_flag.flag:
+	if is_user_activated:
+		hit_mesh_material.emission_enabled = false
+	else:
 		deactive_materials(materials)
-	elif color == Color.BLUE:
-		print(color)
+		
+	#if not stop_flag.flag:
+		#deactive_materials(materials)
+	#elif color == Color.BLUE:
+		#print(color)
 	
 		
 func deactivate_circle(radius: int):

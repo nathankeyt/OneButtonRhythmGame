@@ -3,13 +3,14 @@ extends Node
 enum BeatType {NONE, STANDARD}
 enum TurnType {PLAYER = 0, ENEMY = 1}
 enum PhaseType {CARD = 0, DANCE = 1}
+enum AccType {PERFECT, SUPER, AWESOME, NICE, OK}
 
 var curr_turn: TurnType = TurnType.PLAYER
 var curr_phase: PhaseType = PhaseType.CARD
 
 var played_cards: Array[CardRenderer2D]
 
-var max_resources: int = 5
+var max_resources: int = 3
 @onready var curr_resources: int = max_resources
 
 var deck: Deck2D
@@ -21,10 +22,10 @@ var player: Player
 var enemies: Array[Enemy]
 
 var player_temp_score: float = 0
-var player_temp2_score: float = 0
+var player_temp2_score: float = 1.0
 var player_total_score: float = 0
 var enemy_temp_score: float = 0
-var enemy_temp2_score: float = 0
+var enemy_temp2_score: float = 1.0
 var enemy_total_score: float = 0
 
 var op_queue: Array[Array]
@@ -52,12 +53,15 @@ signal resource_updated(amount: int)
 
 signal note_played(beat_type: BeatType, beat_value: int)
 signal track_ended
+signal note_hit(acc: float)
 
 var curr_op: Effect.OperatorType = 0
 
 func add_player_score(acc: float):
 	if not curr_temp_score_partition:
 		return
+		
+	note_hit.emit(acc)
 		
 	if not is_main_op(curr_op):
 		add_temp_player_score(acc)
@@ -74,7 +78,6 @@ func add_enemy(new_enemy: Enemy):
 	enemies.append(new_enemy)
 	
 func add_temp_player_score(acc: float):
-		
 	player_temp2_score += curr_temp_score_partition * acc
 	p_temp_score_updated.emit(player_temp2_score)
 
@@ -112,18 +115,19 @@ func execute_turn():
 				play_beat_track(card)
 				await track_ended
 				
-				get_tree().create_timer(dance_grid.get_note_travel_time()).timeout.connect(pop_op_queue)
+				get_tree().create_timer(dance_grid.get_note_travel_time() + GlobalAudioManager.curr_beat_rate).timeout.connect(pop_op_queue)
 				card.apply_effects()
 
+			
+			await get_tree().create_timer(dance_grid.get_note_travel_time() + GlobalAudioManager.curr_beat_rate).timeout 
 			played_cards.clear()
-			await get_tree().create_timer(dance_grid.get_note_travel_time()).timeout 
 			turn_ended.emit(curr_turn)
 			player.end_turn()
 			
 			await get_tree().create_timer(GlobalAudioManager.curr_beat_rate * 2.0).timeout
 			player_total_score += player_temp_score
 			p_score_settled.emit(player_total_score)
-			player_temp_score = 0.0
+			player_temp_score = 1.0
 			p_score_updated.emit(0.0)
 			reset_resources()
 			
@@ -223,6 +227,18 @@ func play_beat_track(card: Card):
 			break
 	
 	track_ended.emit()
+	
+func get_acc_type(acc: float) -> AccType:
+	if acc > 0.9:
+		return AccType.PERFECT
+	elif acc > 0.7:
+		return AccType.SUPER
+	elif acc > 0.5:
+		return AccType.AWESOME
+	elif acc > 0.3:
+		return AccType.NICE
+	
+	return AccType.OK
 			
 func is_player_card_phase() -> bool:
 	return curr_phase == PhaseType.CARD and curr_turn == TurnType.PLAYER

@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=35 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://xwugs63lde26" path="res://resources/audio_streams/temp_song_decent_base.ogg" id="3_vkw6q"]
+[ext_resource type="AudioStream" uid="uid://dthhm7laa0i4x" path="res://resources/audio_streams/temp_song.ogg" id="3_bxd16"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
@@ -14,11 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
+[ext_resource type="Shader" path="res://scenes/bar.gdshader" id="13_4ot5w"]
 [ext_resource type="Script" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="15_p5dx8"]
+[ext_resource type="Script" path="res://scenes/accuracy_spawner.gd" id="17_tfyb4"]
+[ext_resource type="PackedScene" uid="uid://bocijqbryevvx" path="res://scenes/accuracy_label.tscn" id="18_6aycb"]
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
-audio_stream = ExtResource("3_vkw6q")
+audio_stream = ExtResource("3_bxd16")
 bpm = 130.0
 
 [sub_resource type="Resource" id="Resource_honre"]
@@ -39,7 +42,7 @@ beat_track = ExtResource("5_u6sq3")
 [sub_resource type="Resource" id="Resource_ab613"]
 script = ExtResource("10_7ebrj")
 beat_num = 16
-beats = Array[int]([1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1])
+beats = Array[int]([1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0])
 
 [sub_resource type="Resource" id="Resource_4top2"]
 script = ExtResource("10_4ojwh")
@@ -76,6 +79,53 @@ modifiable_effects = Array[ExtResource("4_rrtvn")]([])
 unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
 beat_track = SubResource("Resource_mc448")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gv4bq"]
+shader = ExtResource("13_4ot5w")
+shader_parameter/stepify = true
+shader_parameter/value = 1.0
+shader_parameter/count = 1
+shader_parameter/margin = null
+shader_parameter/shear_angle = 0.0
+shader_parameter/use_value_gradient = false
+shader_parameter/invert = false
+
+[sub_resource type="Gradient" id="Gradient_4fuen"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ae3qu"]
+gradient = SubResource("Gradient_4fuen")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e65uo"]
+shader = ExtResource("13_4ot5w")
+shader_parameter/stepify = true
+shader_parameter/value = 1.0
+shader_parameter/count = 1
+shader_parameter/margin = null
+shader_parameter/shear_angle = -0.13
+shader_parameter/use_value_gradient = false
+shader_parameter/invert = false
+shader_parameter/gradient_x = SubResource("GradientTexture1D_ae3qu")
+
+[sub_resource type="Gradient" id="Gradient_0ysmh"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.947914, 0.000805131, 0.958975, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i3b7j"]
+gradient = SubResource("Gradient_0ysmh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4hsg"]
+shader = ExtResource("13_4ot5w")
+shader_parameter/stepify = false
+shader_parameter/value = 1.0
+shader_parameter/count = 3
+shader_parameter/margin = Vector2(0.15, 0.3)
+shader_parameter/shear_angle = -0.15
+shader_parameter/use_value_gradient = false
+shader_parameter/invert = false
+shader_parameter/gradient_x = SubResource("GradientTexture1D_i3b7j")
+
 [node name="Node2D" type="Node2D"]
 
 [node name="DanceFloorContainer" type="SubViewportContainer" parent="."]
@@ -109,11 +159,20 @@ theme_override_constants/separation = 560
 alignment = 1
 script = ExtResource("11_vvjei")
 
+[node name="Control" type="Control" parent="."]
+material = SubResource("ShaderMaterial_gv4bq")
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1314.0
+offset_top = 206.0
+offset_right = 2337.0
+offset_bottom = 706.0
+
 [node name="ScoreContainer" type="HBoxContainer" parent="."]
-offset_left = 252.0
-offset_top = 39.0
-offset_right = 2292.0
-offset_bottom = 389.0
+offset_left = 249.0
+offset_top = 59.0
+offset_right = 2289.0
+offset_bottom = 559.0
 theme_override_constants/separation = 40
 alignment = 1
 
@@ -139,15 +198,28 @@ text = ""
 connected_score_signal = "p_temp_score_updated"
 connected_operator_signal = "p_temp_op_updated"
 
-[node name="ResourceBar" type="ProgressBar" parent="."]
-offset_left = 55.0
-offset_top = 25.0
-offset_right = 584.0
-offset_bottom = 182.0
-max_value = 5.0
-step = 1.0
-value = 5.0
-script = ExtResource("12_eit6h")
-
 [node name="RhythmNotifier" type="Node" parent="."]
 script = ExtResource("15_p5dx8")
+
+[node name="Panel2" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_e65uo")
+offset_left = 73.0
+offset_top = 57.0
+offset_right = 757.0
+offset_bottom = 154.0
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_v4hsg")
+offset_left = 72.0
+offset_top = 55.0
+offset_right = 1078.0
+offset_bottom = 156.0
+scale = Vector2(0.68, 1)
+script = ExtResource("12_eit6h")
+
+[node name="AccuracySpawner" type="Node2D" parent="."]
+position = Vector2(1406, 590)
+script = ExtResource("17_tfyb4")
+label_scene = ExtResource("18_6aycb")
+travel_distance = Vector2(50, -100)
+length = 2

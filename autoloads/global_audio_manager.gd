@@ -27,7 +27,6 @@ func play_battle_song(battle_song: BattleSong, volume = 1.0):
 	beat_manager.beats(1).connect(func(count): beat_played.emit())
 	beat_manager.beats(0.5).connect(func(count): half_beat_played.emit())
 	play_track(battle_song.audio_stream, volume)
-	seek(16)
 	
 		
 func time_since_last_beat():

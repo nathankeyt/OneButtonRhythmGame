@@ -1,5 +1,6 @@
 @tool
 extends Node3D
+class_name SpotLightContainer
 
 @export var color: Color = Color("#ffc9f9") 
 @export var energy: float = 1.0
@@ -19,6 +20,9 @@ func _ready() -> void:
 		spotlight.light_indirect_energy = indirect_energy
 		
 
+func update_light_colors(color: Color):
+	for spotlight: SpotLight3D in spotlights:
+		spotlight.light_color = color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
