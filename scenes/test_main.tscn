@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://dh1c4j86513ud" path="res://resources/audio_streams/base_track.ogg" id="3_ji3yy"]
+[ext_resource type="AudioStream" uid="uid://crkk6n1a5sg5h" path="res://resources/audio_streams/another_temp_song.ogg" id="3_wtdnw"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
@@ -23,8 +23,8 @@
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
-audio_stream = ExtResource("3_ji3yy")
-bpm = 100.0
+audio_stream = ExtResource("3_wtdnw")
+bpm = 400.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gv4bq"]
 shader = ExtResource("13_4ot5w")
@@ -171,6 +171,7 @@ script = ExtResource("17_tfyb4")
 label_scene = ExtResource("18_6aycb")
 travel_distance = Vector2(50, -100)
 length = 2
+perfect_color = Color(0.980392, 0.580392, 0, 1)
 
 [node name="CountdownLabel" type="RichTextLabel" parent="."]
 anchors_preset = 8
@@ -178,20 +179,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 854.0
-offset_top = 259.0
-offset_right = 1704.0
-offset_bottom = 1534.0
+offset_left = -1951.0
+offset_top = 226.0
+offset_right = 4504.0
+offset_bottom = 1511.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(413, 398)
+pivot_offset = Vector2(3228, 480)
 theme = ExtResource("20_52gsf")
 bbcode_enabled = true
-text = "[center]1[/center]"
+text = "[center]READY[/center]"
 script = ExtResource("21_76wka")
 normal_color = Color(0.981504, 0.579851, 0, 1)
 highlight_color = Color(0.901961, 0.309804, 0, 1)
-normal_scale = 0.8
+normal_scale = 0.7
+ready_scale = 0.5
+go_scale = 0.5
 normal_sound = ExtResource("20_yhu0v")
 highlight_sound = ExtResource("21_oi485")
 

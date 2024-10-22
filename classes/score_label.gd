@@ -14,9 +14,11 @@ func _ready() -> void:
 	
 
 func update_score(amount: float):
-	if not amount:
+	if not amount and connected_score_signal != "p_score_settled":
+		var tween: Tween = create_tween()
+		tween.tween_method(set_text_val, prev_score, 0.0, GlobalAudioManager.curr_beat_rate * 2.0)
+		tween.tween_callback(func(): text = "")
 		prev_score = 0.0 
-		text = ""
 		return
 		
 	if text == "" and connected_score_signal == "p_temp_score_updated":
@@ -27,6 +29,7 @@ func update_score(amount: float):
 	prev_score = amount
 	
 func set_text_val(amount: float):
+	
 	text = "[center]" + operator + str(floor(amount) if BattleManager.is_main_op(curr_op) else snappedf(amount, 0.01)) + "[/center]"
 	
 func update_operator(operator_type: Effect.OperatorType):

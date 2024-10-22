@@ -52,7 +52,7 @@ signal turn_ended(turn_type: TurnType)
 signal resource_updated(amount: int)
 
 signal note_played(beat_type: Note, beat_value: int)
-signal example_note_played(num: int, is_target: bool)
+signal example_note_played(num: String, is_target: bool)
 signal track_ended
 signal note_hit(acc: AccType, is_early: bool)
 
@@ -60,6 +60,7 @@ var is_next_note_scoring: bool = false
 var was_last_note_scoring: bool = false
 var late_flag: bool = false
 var nearest_note: Note
+var can_hit: bool = false
 
 var curr_op: Effect.OperatorType = 0
 
@@ -222,6 +223,7 @@ func play_beat_track(card: Card):
 	GlobalAudioManager.set_bpm(beat_track.bpm)
 
 	await play_example_beats(beat_track)
+	can_hit = true
 	
 	var first: bool = true
 	
@@ -257,30 +259,45 @@ func play_beat_track(card: Card):
 				beat_track.reset_beat()
 				break
 
+	can_hit = false
 	track_ended.emit()
 	
+	
 func play_example_beats(beat_track: BeatTrack): 
-	await GlobalAudioManager.quarter_beat_played 
+	await GlobalAudioManager.measure_played
 	
 	var target: int = beat_track.example_beat_num / beat_track.example_speed_scale
 	for repetition: int in beat_track.example_repetitions:
 		for num: int in target:
-			var index: int = num * beat_track.example_speed_scale
+			var index: int = (num * beat_track.example_speed_scale) % beat_track.beat_num
+			var val: String
+			
+			var comparison_val = (beat_track.example_repetitions - 1) * (target - 1)
+			#if num * repetition == comparison_val:
+				#val = "GO!"
+			#elif num * repetition == comparison_val - 1:
+				#val = "SET"
+			#elif num * repetition == comparison_val - 2:
+				#val = "READY"
+			#else:
+			val = str(num + 1)
+			
 			if index < beat_track.set_beats.size() and beat_track.get_beat(index):
-				example_note_played.emit(num + 1, beat_track.get_beat(index).is_scoring)
+				example_note_played.emit(str(val), beat_track.get_beat(index).is_scoring)
 			else:
-				example_note_played.emit(num + 1, false)
+				example_note_played.emit(str(val), false)
 				
 			for i in beat_track.example_speed_scale:
 				await GlobalAudioManager.quarter_beat_played
-				if num + 1 == target and repetition + 1 == beat_track.example_repetitions:
-					num += 1
-					example_note_played.emit(0.0, false)
-			
+				#if num + 1 == target and repetition + 1 == beat_track.example_repetitions:
+					#num += 1
+					#example_note_played.emit("", false)
+	
+	example_note_played.emit("", false)
 	
 
 func _input(event: InputEvent) -> void:
-	if is_player_dance_phase() and event.is_action_pressed("select"):
+	if can_hit and event.is_action_pressed("select"):
 		handle_hit()
 	
 func handle_hit():

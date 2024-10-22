@@ -7,6 +7,7 @@ class_name DanceGrid
 @export var start_radius: int = 9
 @export var end_radius: int = 0
 @export var hit_mesh: MeshInstance3D
+@export var hit_color: Color
 
 @onready var total_radius: int = start_radius - end_radius
 @onready var center: float = ((grid_size - 1) * cell_size) / 2.0
@@ -105,7 +106,7 @@ func animate_hit(acc: BattleManager.AccType, is_early: bool = false):
 		BattleManager.AccType.PERFECT:
 			if is_early:
 				await GlobalAudioManager.quarter_beat_played
-			animate_standard(stop_flag, Color.BLUE)
+			animate_standard(stop_flag, hit_color)
 		_:
 			animate_standard(stop_flag, Color.RED)
 
