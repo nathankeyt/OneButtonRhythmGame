@@ -10,7 +10,7 @@ class_name Card
 @export var unmodifiable_effects: Array[Effect]
 @export var beat_track: BeatTrack
 
-var num_beats: int = 0
+var num_scoring_beats: int = 0
 
 func apply_effects() -> void:
 	for effect: Effect in modifiable_effects:
@@ -20,18 +20,21 @@ func apply_effects() -> void:
 		effect.apply_effect()
 
 func get_score_partition() -> float:
-	if not num_beats:
-		get_num_beats()
+	if not num_scoring_beats:
+		get_num_scoring_beats()
 	
-	if not score_effect or not num_beats:
+	if not score_effect or not num_scoring_beats:
 		return 0.0
 		
-	return score_effect.partition_amount(num_beats)
+	return score_effect.partition_amount(num_scoring_beats * beat_track.repetitions)
 
-func get_num_beats():
+func get_num_scoring_beats():
 	if not beat_track:
 		return
 		
-	for beat: Note in beat_track.beats:
-		if beat:
-			num_beats += 1
+	for i: int in beat_track.beat_num:
+		var beat: Note = beat_track.get_beat(i)
+		if beat and beat.is_scoring:
+			num_scoring_beats += 1
+			
+			

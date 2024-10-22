@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bph2d1lfbdq8s"]
+
+[ext_resource type="FontFile" uid="uid://mdals51ltkut" path="res://resources/fonts/Homme.ttf" id="1_4m4u0"]
+
+[resource]
+default_font = ExtResource("1_4m4u0")
+default_font_size = 1000

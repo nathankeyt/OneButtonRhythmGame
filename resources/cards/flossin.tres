@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Card" load_steps=8 format=3 uid="uid://c21o3sqcne3gx"]
+
+[ext_resource type="Script" path="res://classes/note.gd" id="1_e05ty"]
+[ext_resource type="Script" path="res://classes/beat_track.gd" id="2_ovn04"]
+[ext_resource type="Script" path="res://classes/effect.gd" id="3_p5f2x"]
+[ext_resource type="Script" path="res://classes/derived_effects/score_effect.gd" id="4_gwx04"]
+[ext_resource type="Script" path="res://classes/card.gd" id="5_kjjk1"]
+
+[sub_resource type="Resource" id="Resource_mc448"]
+script = ExtResource("2_ovn04")
+beat_num = 4
+beats = Array[ExtResource("1_e05ty")]([])
+bpm = 130.0
+repetitions = 4
+example_speed_scale = 1
+
+[sub_resource type="Resource" id="Resource_wvwx1"]
+script = ExtResource("4_gwx04")
+m_amount = 100.0
+m_operator_type = 1
+
+[resource]
+script = ExtResource("5_kjjk1")
+title = "Floss"
+text = "Flossin"
+cost = 1
+score_effect = SubResource("Resource_wvwx1")
+modifiable_effects = Array[ExtResource("3_p5f2x")]([])
+unmodifiable_effects = Array[ExtResource("3_p5f2x")]([])
+beat_track = SubResource("Resource_mc448")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NoteMapping" load_steps=4 format=3 uid="uid://dkklhsgqbtx7h"]
+
+[ext_resource type="Resource" uid="uid://jb56d4hx8r5q" path="res://resources/notes/kick.tres" id="1_43xa1"]
+[ext_resource type="Resource" uid="uid://y2ahx51c8s2y" path="res://resources/notes/scoring_clap.tres" id="2_7u6su"]
+[ext_resource type="Script" path="res://classes/note_mapping.gd" id="3_1jvwi"]
+
+[resource]
+script = ExtResource("3_1jvwi")
+note_mapping = {
+1: ExtResource("1_43xa1"),
+2: ExtResource("2_7u6su")
+}

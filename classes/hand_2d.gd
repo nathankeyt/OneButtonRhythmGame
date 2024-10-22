@@ -85,6 +85,7 @@ func lower_hand() -> void:
 func raise_hand() -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(display_path, "position:y", display_path.position.y - hand_lower_distance, hand_lower_time).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_callback(draw_card)
 
 func _input(event: InputEvent) -> void:
 	if BattleManager.is_player_card_phase():

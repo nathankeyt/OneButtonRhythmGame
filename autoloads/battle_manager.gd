@@ -1,6 +1,6 @@
 extends Node
 
-enum BeatType {NONE, STANDARD}
+enum BeatType {NONE, STANDARD, SCORING}
 enum TurnType {PLAYER = 0, ENEMY = 1}
 enum PhaseType {CARD = 0, DANCE = 1}
 enum AccType {PERFECT, EARLY, LATE}
@@ -22,7 +22,7 @@ var player: Player
 var enemies: Array[Enemy]
 
 var player_temp_score: float = 0
-var player_temp2_score: float = 1.0
+var player_temp2_score: float = 0.0
 var player_total_score: float = 0
 var enemy_temp_score: float = 0
 var enemy_temp2_score: float = 1.0
@@ -52,6 +52,7 @@ signal turn_ended(turn_type: TurnType)
 signal resource_updated(amount: int)
 
 signal note_played(beat_type: Note, beat_value: int)
+signal example_note_played(num: int, is_target: bool)
 signal track_ended
 signal note_hit(acc: AccType, is_early: bool)
 
@@ -65,8 +66,6 @@ var curr_op: Effect.OperatorType = 0
 func add_player_score(acc: float):
 	if not curr_temp_score_partition:
 		return
-		
-	note_hit.emit(acc)
 		
 	if not is_main_op(curr_op):
 		add_temp_player_score(acc)
@@ -83,6 +82,8 @@ func add_enemy(new_enemy: Enemy):
 	enemies.append(new_enemy)
 	
 func add_temp_player_score(acc: float):
+	if not player_temp2_score:
+		player_temp2_score += 1.0
 	player_temp2_score += curr_temp_score_partition * acc
 	p_temp_score_updated.emit(player_temp2_score)
 
@@ -120,7 +121,7 @@ func execute_turn():
 				play_beat_track(card)
 				await track_ended
 				
-				get_tree().create_timer(dance_grid.get_note_travel_time() + GlobalAudioManager.curr_beat_rate).timeout.connect(pop_op_queue)
+				get_tree().create_timer(GlobalAudioManager.curr_beat_rate).timeout.connect(pop_op_queue)
 				card.apply_effects()
 
 			
@@ -132,7 +133,7 @@ func execute_turn():
 			await get_tree().create_timer(GlobalAudioManager.curr_beat_rate * 2.0).timeout
 			player_total_score += player_temp_score
 			p_score_settled.emit(player_total_score)
-			player_temp_score = 1.0
+			player_temp_score = 0.0
 			p_score_updated.emit(0.0)
 			reset_resources()
 			
@@ -160,6 +161,7 @@ func reset_resources():
 func pop_op_queue():
 	if player_temp2_score:
 		player_temp_score = settle_score(player_temp_score, player_temp2_score, curr_op)
+		player_temp2_score = 0.0
 		p_score_updated.emit(player_temp_score)
 		p_temp_op_updated.emit(0)
 		p_temp_score_updated.emit(0.0)
@@ -218,6 +220,10 @@ func play_beat_track(card: Card):
 		return
 		
 	GlobalAudioManager.set_bpm(beat_track.bpm)
+
+	await play_example_beats(beat_track)
+	
+	var first: bool = true
 	
 	for repetitions: int in beat_track.repetitions:
 		while(true):
@@ -231,25 +237,48 @@ func play_beat_track(card: Card):
 			else:
 				is_next_note_scoring = false
 			
-			await GlobalAudioManager.quarter_beat_played
+			if not first:
+				await GlobalAudioManager.quarter_beat_played
+			
+			first = false
 			
 			if note:
 				if not note.is_scoring:
 					note_played.emit(note)
 				note.play()
+				
+			was_last_note_scoring = is_next_note_scoring
+			if was_last_note_scoring:
+				nearest_note = note
+				late_flag = true
 					
 			if not beat_track.increment_beat(): 
 				print("break")
 				beat_track.reset_beat()
 				break
-		
-			was_last_note_scoring = is_next_note_scoring
-			if was_last_note_scoring:
-				nearest_note = note
-				late_flag = true
-	
+
 	track_ended.emit()
 	
+func play_example_beats(beat_track: BeatTrack): 
+	await GlobalAudioManager.quarter_beat_played 
+	
+	var target: int = beat_track.example_beat_num / beat_track.example_speed_scale
+	for repetition: int in beat_track.example_repetitions:
+		for num: int in target:
+			var index: int = num * beat_track.example_speed_scale
+			if index < beat_track.set_beats.size() and beat_track.get_beat(index):
+				example_note_played.emit(num + 1, beat_track.get_beat(index).is_scoring)
+			else:
+				example_note_played.emit(num + 1, false)
+				
+			for i in beat_track.example_speed_scale:
+				await GlobalAudioManager.quarter_beat_played
+				if num + 1 == target and repetition + 1 == beat_track.example_repetitions:
+					num += 1
+					example_note_played.emit(0.0, false)
+			
+	
+
 func _input(event: InputEvent) -> void:
 	if is_player_dance_phase() and event.is_action_pressed("select"):
 		handle_hit()
@@ -273,9 +302,10 @@ func handle_hit():
 	note_hit.emit(get_acc_type(acc), acc > 0.0)
 	
 func get_acc_type(time_diff: float) -> AccType:
-	if time_diff >= 0.5:
+	if time_diff >= 1.0:
 		return AccType.EARLY
-	elif time_diff > -0.5:
+	elif time_diff > -1.0:
+		add_player_score(1.0)
 		return AccType.PERFECT
 	
 	return AccType.LATE

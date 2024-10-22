@@ -4,8 +4,6 @@ class_name Deck2D
 @export var cards: Array[Card]
 @export var card_renderer_scene: PackedScene
 
-@onready var sprite: Sprite2D = $CardBacking
-
 func _init() -> void:
 	BattleManager.deck = self
 

@@ -25,12 +25,13 @@ func play_track(new_stream: AudioStream, volume = 1.0):
 
 func set_bpm(new_bpm: float):
 	beat_manager.bpm = new_bpm
+	curr_beat_rate = (60.0 / new_bpm) / 4.0
 	
 	
 func play_battle_song(battle_song: BattleSong, volume = 1.0):
 	base_bpm = battle_song.bpm
 	beat_manager.bpm = battle_song.bpm
-	curr_beat_rate = 60.0 / battle_song.bpm
+	curr_beat_rate = (60.0 / battle_song.bpm) / 4.0
 	beat_manager.beats(1).connect(func(count): beat_played.emit())
 	beat_manager.beats(0.5).connect(func(count): half_beat_played.emit())
 	beat_manager.beats(0.25).connect(func(count): quarter_beat_played.emit())
@@ -45,10 +46,12 @@ func time_to_next_beat():
 	
 func distance_to_quarter_beat():
 	var scaled_beat: float = beat_manager.current_position * 4.0
+	print(ceil(scaled_beat) - scaled_beat)
 	return ceil(scaled_beat) - scaled_beat
 	
 func distance_from_quarter_beat():
 	var scaled_beat: float = beat_manager.current_position * 4.0
+	print(scaled_beat - floor(scaled_beat))
 	return scaled_beat - floor(scaled_beat)
 
 func play_SFX(new_stream: AudioStream, volume = 1.0, length = 0.0):

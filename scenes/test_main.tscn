@@ -1,88 +1,30 @@
-[gd_scene load_steps=36 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=29 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
 [ext_resource type="AudioStream" uid="uid://dh1c4j86513ud" path="res://resources/audio_streams/base_track.ogg" id="3_ji3yy"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
-[ext_resource type="Script" path="res://classes/effect.gd" id="4_rrtvn"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
-[ext_resource type="Resource" uid="uid://dnw06mpoy2de5" path="res://resources/beat_tracks/default_beat_track.tres" id="5_u6sq3"]
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
-[ext_resource type="Script" path="res://classes/derived_effects/score_effect.gd" id="10_4ojwh"]
-[ext_resource type="Script" path="res://classes/beat_track.gd" id="10_7ebrj"]
+[ext_resource type="Resource" uid="uid://dvo6iuey3ibm5" path="res://resources/cards/dougie.tres" id="7_rhx28"]
+[ext_resource type="Resource" uid="uid://dajh12bqkvmn0" path="res://resources/cards/two_step.tres" id="8_l3ij7"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
-[ext_resource type="Script" path="res://classes/note.gd" id="10_xfunt"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
 [ext_resource type="Shader" path="res://scenes/bar.gdshader" id="13_4ot5w"]
 [ext_resource type="Script" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="15_p5dx8"]
 [ext_resource type="Script" path="res://scenes/accuracy_spawner.gd" id="17_tfyb4"]
 [ext_resource type="PackedScene" uid="uid://bocijqbryevvx" path="res://scenes/accuracy_label.tscn" id="18_6aycb"]
+[ext_resource type="Theme" uid="uid://bph2d1lfbdq8s" path="res://resources/themes/countdown.tres" id="20_52gsf"]
+[ext_resource type="AudioStream" uid="uid://dmevgx5l0gpn5" path="res://resources/audio_streams/kick.ogg" id="20_yhu0v"]
+[ext_resource type="Script" path="res://scenes/countdown_label.gd" id="21_76wka"]
+[ext_resource type="AudioStream" uid="uid://tp2f303u8nx" path="res://resources/audio_streams/clap.ogg" id="21_oi485"]
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
 audio_stream = ExtResource("3_ji3yy")
 bpm = 100.0
-
-[sub_resource type="Resource" id="Resource_honre"]
-script = ExtResource("10_4ojwh")
-m_amount = 10000.0
-m_operator_type = 1
-
-[sub_resource type="Resource" id="Resource_py45q"]
-script = ExtResource("3_ygbk7")
-title = "Dougie"
-text = "Teach me how to dougie."
-cost = 1
-score_effect = SubResource("Resource_honre")
-modifiable_effects = Array[ExtResource("4_rrtvn")]([])
-unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
-beat_track = ExtResource("5_u6sq3")
-
-[sub_resource type="Resource" id="Resource_ab613"]
-script = ExtResource("10_7ebrj")
-beat_num = 16
-beats = Array[ExtResource("10_xfunt")]([])
-bpm = 130.0
-repetitions = 4
-
-[sub_resource type="Resource" id="Resource_4top2"]
-script = ExtResource("10_4ojwh")
-m_amount = 5.0
-m_operator_type = 3
-
-[sub_resource type="Resource" id="Resource_1rj1d"]
-script = ExtResource("3_ygbk7")
-title = "Two step"
-text = "Whats this one again."
-cost = 1
-score_effect = SubResource("Resource_4top2")
-modifiable_effects = Array[ExtResource("4_rrtvn")]([])
-unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
-beat_track = SubResource("Resource_ab613")
-
-[sub_resource type="Resource" id="Resource_mc448"]
-script = ExtResource("10_7ebrj")
-beat_num = 4
-beats = Array[ExtResource("10_xfunt")]([])
-bpm = 130.0
-repetitions = 4
-
-[sub_resource type="Resource" id="Resource_wvwx1"]
-script = ExtResource("10_4ojwh")
-m_amount = 100.0
-m_operator_type = 1
-
-[sub_resource type="Resource" id="Resource_awtrj"]
-script = ExtResource("3_ygbk7")
-title = "Floss"
-text = "Flossin"
-cost = 1
-score_effect = SubResource("Resource_wvwx1")
-modifiable_effects = Array[ExtResource("4_rrtvn")]([])
-unmodifiable_effects = Array[ExtResource("4_rrtvn")]([])
-beat_track = SubResource("Resource_mc448")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gv4bq"]
 shader = ExtResource("13_4ot5w")
@@ -147,12 +89,13 @@ render_target_update_mode = 4
 
 [node name="Hand" parent="." instance=ExtResource("1_y3xwx")]
 position = Vector2(1280, 1221)
+starter_draw_size = 3
 battle_song = SubResource("Resource_472e0")
 
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2339, 1170)
 scale = Vector2(1, 1.0021)
-cards = Array[ExtResource("3_ygbk7")]([SubResource("Resource_py45q"), SubResource("Resource_1rj1d"), SubResource("Resource_awtrj")])
+cards = Array[ExtResource("3_ygbk7")]([ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7")])
 card_renderer_scene = ExtResource("6_xowa6")
 
 [node name="PlayedCards" type="HBoxContainer" parent="."]
@@ -228,3 +171,28 @@ script = ExtResource("17_tfyb4")
 label_scene = ExtResource("18_6aycb")
 travel_distance = Vector2(50, -100)
 length = 2
+
+[node name="CountdownLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 854.0
+offset_top = 259.0
+offset_right = 1704.0
+offset_bottom = 1534.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(413, 398)
+theme = ExtResource("20_52gsf")
+bbcode_enabled = true
+text = "[center]1[/center]"
+script = ExtResource("21_76wka")
+normal_color = Color(0.981504, 0.579851, 0, 1)
+highlight_color = Color(0.901961, 0.309804, 0, 1)
+normal_scale = 0.8
+normal_sound = ExtResource("20_yhu0v")
+highlight_sound = ExtResource("21_oi485")
+
+[node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="."]

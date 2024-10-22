@@ -23,7 +23,7 @@ func update_score(amount: float):
 		prev_score = 1.0
 	
 	var tween: Tween = create_tween()
-	tween.tween_method(set_text_val, prev_score, amount, GlobalAudioManager.curr_beat_rate)
+	tween.tween_method(set_text_val, prev_score, amount, GlobalAudioManager.curr_beat_rate * 2.0)
 	prev_score = amount
 	
 func set_text_val(amount: float):
