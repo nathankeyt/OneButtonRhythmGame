@@ -1,14 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://f3oi3l5bq6kv"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_v6giv"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_jiq73"]
+[ext_resource type="PackedScene" uid="uid://54q5o1v7d3bm" path="res://main_character_dance_inherited.tscn" id="2_wxn0o"]
 
 [node name="Player" type="PathFollow3D"]
+transform = Transform3D(1.71241, 0, 0, 0, 1.71241, 0, 0, 0, 1.71241, 0, 0, 0)
+rotation_mode = 0
+tilt_enabled = false
 script = ExtResource("1_v6giv")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-modulate = Color(0, 0, 0, 1)
-pixel_size = 1.0
-axis = 0
-texture = SubResource("CanvasTexture_jiq73")
+[node name="main_character_dance" parent="." instance=ExtResource("2_wxn0o")]
+transform = Transform3D(-1.74037e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -1.74037e-08, 0, 0, 0)

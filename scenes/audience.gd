@@ -11,17 +11,17 @@ func _ready() -> void:
 
 
 func bounce():
-	if flip:
-		global_position.y += bounce_amount
+	#if flip:
+		#global_position.y += bounce_amount
 		#tween.tween_property(self, "global_position:y", global_position.y + bounce_amount, GlobalAudioManager.curr_beat_rate)
-	else:
-		global_position.y -= bounce_amount
+	#else:
+		#global_position.y -= bounce_amount
 		#tween.tween_property(self, "global_position:y", global_position.y - bounce_amount, GlobalAudioManager.curr_beat_rate)
 	flip = !flip
 
 func _physics_process(delta: float) -> void:
-	#if flip:
-		#global_position.y += bounce_amount * delta
-	#else:
-		#global_position.y -= bounce_amount * delta
+	if flip:
+		global_position.y += bounce_amount * delta
+	else:
+		global_position.y -= bounce_amount * delta
 	pass
