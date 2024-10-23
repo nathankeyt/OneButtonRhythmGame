@@ -1,8 +1,8 @@
 extends RichTextLabel
 class_name ScoreLabel
 
-@export_enum("p_temp_score_updated", "e_temp_score_updated", "p_score_updated", "e_score_updated", "p_score_settled", "e_score_settled") var connected_score_signal: String
-@export_enum("p_temp_op_updated", "e_temp_op_updated", "p_op_updated", "e_op_updated", "p_op_settled", "e_op_settled") var connected_operator_signal: String
+@export_enum("p_temp_score_updated", "e_temp_score_updated", "p_score_updated", "e_score_updated", "p_score_settled", "e_score_settled", "combo_updated") var connected_score_signal: String
+@export_enum("p_temp_op_updated", "e_temp_op_updated", "p_op_updated", "e_op_updated", "p_op_settled", "e_op_settled", "combo_op_updated") var connected_operator_signal: String
 
 var operator: String = ""
 var curr_op: Effect.OperatorType = 0
@@ -10,7 +10,11 @@ var prev_score: float = 0
 
 func _ready() -> void:
 	BattleManager.connect(connected_score_signal, update_score)
-	BattleManager.connect(connected_operator_signal, update_operator)
+	if connected_operator_signal == "combo_op_updated":
+		operator = "x"
+		curr_op = Effect.OperatorType.MULTIPLY
+	else:
+		BattleManager.connect(connected_operator_signal, update_operator)
 	
 
 func update_score(amount: float):
@@ -21,7 +25,7 @@ func update_score(amount: float):
 		prev_score = 0.0 
 		return
 		
-	if text == "" and connected_score_signal == "p_temp_score_updated":
+	if text == "" and connected_score_signal == "p_temp_score_updated" or connected_score_signal == "combo_updated":
 		prev_score = 1.0
 	
 	var tween: Tween = create_tween()

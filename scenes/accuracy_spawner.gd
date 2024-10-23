@@ -4,6 +4,7 @@ extends Node2D
 @export var travel_distance: Vector2
 @export var length: int = 1
 @export var perfect_color: Color
+@export var miss_sound: AudioStream
 
 func _ready() -> void:
 	BattleManager.note_hit.connect(generate_label)

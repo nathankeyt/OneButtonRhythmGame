@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BeatTrack" load_steps=3 format=3 uid="uid://crek3kla1wg2a"]
+
+[ext_resource type="Script" path="res://classes/beat_track.gd" id="1_0ntug"]
+[ext_resource type="Resource" uid="uid://dkklhsgqbtx7h" path="res://resources/note_mappings/default_mapping.tres" id="1_27wge"]
+
+[resource]
+script = ExtResource("1_0ntug")
+beat_num = 32
+set_beats = Array[int]([1, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0])
+note_mapping = ExtResource("1_27wge")
+bpm = 80.0
+repetitions = 4
+example_speed_scale = 2
+example_repetitions = 1
+example_beat_num = 16

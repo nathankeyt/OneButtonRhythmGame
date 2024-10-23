@@ -1,14 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=32 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
-[ext_resource type="AudioStream" uid="uid://crkk6n1a5sg5h" path="res://resources/audio_streams/another_temp_song.ogg" id="3_wtdnw"]
+[ext_resource type="AudioStream" uid="uid://dh1c4j86513ud" path="res://resources/audio_streams/base_track.ogg" id="3_ji3yy"]
 [ext_resource type="Script" path="res://classes/card.gd" id="3_ygbk7"]
 [ext_resource type="Script" path="res://classes/battle_song.gd" id="4_tni2y"]
 [ext_resource type="PackedScene" uid="uid://cjw6u7yhnkpwv" path="res://scenes/default_card_renderer.tscn" id="6_xowa6"]
 [ext_resource type="PackedScene" uid="uid://d2a6y3ig64vm0" path="res://scenes/total_score_label.tscn" id="7_aymrh"]
-[ext_resource type="Resource" uid="uid://dvo6iuey3ibm5" path="res://resources/cards/dougie.tres" id="7_rhx28"]
-[ext_resource type="Resource" uid="uid://dajh12bqkvmn0" path="res://resources/cards/two_step.tres" id="8_l3ij7"]
+[ext_resource type="Resource" uid="uid://cjnhp0x1e6qe8" path="res://resources/cards/dougie.tres" id="7_rhx28"]
+[ext_resource type="Resource" uid="uid://bgfu23mxdgppq" path="res://resources/cards/two_step.tres" id="8_l3ij7"]
 [ext_resource type="PackedScene" uid="uid://duu8oi1tvej58" path="res://scenes/dance_floor.tscn" id="10_h4oj0"]
 [ext_resource type="Script" path="res://scenes/played_cards.gd" id="11_vvjei"]
 [ext_resource type="Script" path="res://scenes/resource_bar.gd" id="12_eit6h"]
@@ -16,15 +16,18 @@
 [ext_resource type="Script" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="15_p5dx8"]
 [ext_resource type="Script" path="res://scenes/accuracy_spawner.gd" id="17_tfyb4"]
 [ext_resource type="PackedScene" uid="uid://bocijqbryevvx" path="res://scenes/accuracy_label.tscn" id="18_6aycb"]
+[ext_resource type="Script" path="res://classes/score_label.gd" id="18_dy6hx"]
 [ext_resource type="Theme" uid="uid://bph2d1lfbdq8s" path="res://resources/themes/countdown.tres" id="20_52gsf"]
 [ext_resource type="AudioStream" uid="uid://dmevgx5l0gpn5" path="res://resources/audio_streams/kick.ogg" id="20_yhu0v"]
 [ext_resource type="Script" path="res://scenes/countdown_label.gd" id="21_76wka"]
+[ext_resource type="Script" path="res://scenes/beat_count_label.gd" id="21_b5owt"]
 [ext_resource type="AudioStream" uid="uid://tp2f303u8nx" path="res://resources/audio_streams/clap.ogg" id="21_oi485"]
+[ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="21_oonqa"]
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
-audio_stream = ExtResource("3_wtdnw")
-bpm = 400.0
+audio_stream = ExtResource("3_ji3yy")
+bpm = 100.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gv4bq"]
 shader = ExtResource("13_4ot5w")
@@ -149,19 +152,20 @@ connected_operator_signal = "p_temp_op_updated"
 [node name="RhythmNotifier" type="Node" parent="."]
 script = ExtResource("15_p5dx8")
 
-[node name="Panel2" type="Panel" parent="."]
+[node name="ResourceBar" type="Panel" parent="."]
 material = SubResource("ShaderMaterial_e65uo")
 offset_left = 73.0
 offset_top = 57.0
 offset_right = 757.0
 offset_bottom = 154.0
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="ResourceBar"]
 material = SubResource("ShaderMaterial_v4hsg")
-offset_left = 72.0
-offset_top = 55.0
-offset_right = 1078.0
-offset_bottom = 156.0
+layout_mode = 0
+offset_left = -1.0
+offset_top = -2.0
+offset_right = 1005.0
+offset_bottom = 99.0
 scale = Vector2(0.68, 1)
 script = ExtResource("12_eit6h")
 
@@ -173,29 +177,66 @@ travel_distance = Vector2(50, -100)
 length = 2
 perfect_color = Color(0.980392, 0.580392, 0, 1)
 
+[node name="ComboLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1645.0
+offset_top = 62.0
+offset_right = 2503.0
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(413, 398)
+theme = ExtResource("21_oonqa")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[right]x 1.00 [/right]"
+script = ExtResource("18_dy6hx")
+connected_score_signal = "combo_updated"
+connected_operator_signal = "combo_op_updated"
+
 [node name="CountdownLabel" type="RichTextLabel" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1951.0
-offset_top = 226.0
-offset_right = 4504.0
-offset_bottom = 1511.0
+offset_left = 854.0
+offset_top = 259.0
+offset_right = 1704.0
+offset_bottom = 1534.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(3228, 480)
+pivot_offset = Vector2(413, 398)
 theme = ExtResource("20_52gsf")
 bbcode_enabled = true
-text = "[center]READY[/center]"
 script = ExtResource("21_76wka")
 normal_color = Color(0.981504, 0.579851, 0, 1)
 highlight_color = Color(0.901961, 0.309804, 0, 1)
-normal_scale = 0.7
-ready_scale = 0.5
-go_scale = 0.5
+normal_scale = 0.8
 normal_sound = ExtResource("20_yhu0v")
 highlight_sound = ExtResource("21_oi485")
+
+[node name="BeatCountLabel" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 854.0
+offset_top = 872.0
+offset_right = 1704.0
+offset_bottom = 1534.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(413, 398)
+theme = ExtResource("21_oonqa")
+bbcode_enabled = true
+text = "[center]1[/center]"
+script = ExtResource("21_b5owt")
 
 [node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="."]

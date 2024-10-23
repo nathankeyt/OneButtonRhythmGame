@@ -28,6 +28,8 @@ var enemy_temp_score: float = 0
 var enemy_temp2_score: float = 1.0
 var enemy_total_score: float = 0
 
+var combo_score: float = 1.0
+
 var op_queue: Array[Array]
 
 var curr_temp_score_partition: float = 0;
@@ -49,9 +51,12 @@ signal e_op_settled(score: Effect.OperatorType)
 signal card_played(card_renderer: CardRenderer2D)
 signal turn_ended(turn_type: TurnType)
 
+signal combo_updated(score: float)
+
 signal resource_updated(amount: int)
 
-signal note_played(beat_type: Note, beat_value: int)
+signal note_played(beat_type: Note, is_early: bool)
+signal display_count(count: int)
 signal example_note_played(num: String, is_target: bool)
 signal track_ended
 signal note_hit(acc: AccType, is_early: bool)
@@ -63,6 +68,9 @@ var nearest_note: Note
 var can_hit: bool = false
 
 var curr_op: Effect.OperatorType = 0
+
+func _ready() -> void:
+	note_hit.connect(on_note_hit)
 
 func add_player_score(acc: float):
 	if not curr_temp_score_partition:
@@ -132,7 +140,8 @@ func execute_turn():
 			player.end_turn()
 			
 			await get_tree().create_timer(GlobalAudioManager.curr_beat_rate * 2.0).timeout
-			player_total_score += player_temp_score
+			player_total_score += player_temp_score * combo_score
+			reset_combo()
 			p_score_settled.emit(player_total_score)
 			player_temp_score = 0.0
 			p_score_updated.emit(0.0)
@@ -228,6 +237,8 @@ func play_beat_track(card: Card):
 	var first: bool = true
 	
 	for repetitions: int in beat_track.repetitions:
+		var count: int = 1
+		
 		while(true):
 			var note: Note = beat_track.get_curr_beat()
 			
@@ -245,8 +256,11 @@ func play_beat_track(card: Card):
 			first = false
 			
 			if note:
+				
 				if not note.is_scoring:
 					note_played.emit(note)
+					display_count.emit(count)
+				count += 1
 				note.play()
 				
 			was_last_note_scoring = is_next_note_scoring
@@ -264,7 +278,7 @@ func play_beat_track(card: Card):
 	
 	
 func play_example_beats(beat_track: BeatTrack): 
-	await GlobalAudioManager.measure_played
+	await GlobalAudioManager.quarter_beat_played
 	
 	var target: int = beat_track.example_beat_num / beat_track.example_speed_scale
 	for repetition: int in beat_track.example_repetitions:
@@ -326,6 +340,21 @@ func get_acc_type(time_diff: float) -> AccType:
 		return AccType.PERFECT
 	
 	return AccType.LATE
+	
+func on_note_hit(acc_type: AccType, ):
+	match acc_type:
+		AccType.PERFECT:
+			add_combo()
+		_:
+			reset_combo()
+	
+func add_combo():
+	combo_score += 0.5
+	combo_updated.emit(combo_score)
+	
+func reset_combo():
+	combo_score = 1.0
+	combo_updated.emit(1.0)
 			
 func is_player_card_phase() -> bool:
 	return curr_phase == PhaseType.CARD and curr_turn == TurnType.PLAYER
