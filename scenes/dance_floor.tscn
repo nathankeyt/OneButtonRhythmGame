@@ -68,7 +68,8 @@ material = SubResource("StandardMaterial3D_gtd41")
 size = Vector2(1.9, 1.9)
 
 [sub_resource type="Gradient" id="Gradient_mn3w3"]
-colors = PackedColorArray(0.0563722, 7.16246e-06, 0.065585, 1, 0.263127, 3.63026e-05, 0.253933, 1)
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.150974, 0.000218923, 0.148012, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_7cwjt"]
 gradient = SubResource("Gradient_mn3w3")
@@ -79,7 +80,7 @@ shader = ExtResource("7_n46o3")
 shader_parameter/ToonRampOffset = 0.0
 shader_parameter/ToonRampSmoothness = 0.0
 shader_parameter/ToonRampTinting = Color(0.258794, 0.000239619, 0.336041, 1)
-shader_parameter/RimPower = 1.0
+shader_parameter/RimPower = 0.0
 shader_parameter/RimCutOff = 1.0
 shader_parameter/RimSmoothness = 0.05
 shader_parameter/RimLightBrightness = 20.0

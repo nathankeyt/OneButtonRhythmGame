@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://nlrmo5wi48pr"]
+[gd_scene load_steps=35 format=3 uid="uid://nlrmo5wi48pr"]
 
 [ext_resource type="PackedScene" uid="uid://bwfmah13oq5ef" path="res://scenes/hand.tscn" id="1_y3xwx"]
 [ext_resource type="PackedScene" uid="uid://b1gwaqsqntkgf" path="res://scenes/default_deck.tscn" id="2_stpix"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://scenes/beat_count_label.gd" id="21_b5owt"]
 [ext_resource type="AudioStream" uid="uid://tp2f303u8nx" path="res://resources/audio_streams/clap.ogg" id="21_oi485"]
 [ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="21_oonqa"]
+[ext_resource type="Shader" path="res://screen.gdshader" id="24_tm8s6"]
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
@@ -75,6 +76,32 @@ shader_parameter/shear_angle = -0.15
 shader_parameter/use_value_gradient = false
 shader_parameter/invert = false
 shader_parameter/gradient_x = SubResource("GradientTexture1D_i3b7j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mr25"]
+shader = ExtResource("24_tm8s6")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.0
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 5.0
+shader_parameter/roll_size = 19.709
+shader_parameter/roll_variation = 0.585
+shader_parameter/distort_intensity = 0.0
+shader_parameter/noise_opacity = 0.1
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.085
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.135
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pygnv"]
 
 [node name="Main" type="Node2D"]
 
@@ -240,3 +267,11 @@ text = "[center]1[/center]"
 script = ExtResource("21_b5owt")
 
 [node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="."]
+
+[node name="ScreenFilter" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+material = SubResource("ShaderMaterial_0mr25")
+position = Vector2(1280, 720)
+scale = Vector2(2560, 1440)
+texture = SubResource("CanvasTexture_pygnv")
