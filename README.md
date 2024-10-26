@@ -1,2 +1,2 @@
 # OneButtonRhythmGame
-A rhythm game using midi notes and only one button.
+A rhythm game about matching the beat with only one button.
