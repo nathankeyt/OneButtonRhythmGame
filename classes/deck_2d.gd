@@ -6,6 +6,9 @@ class_name Deck2D
 
 func _init() -> void:
 	BattleManager.deck = self
+	
+func _ready() -> void:
+	shuffle()
 
 func pop() -> Card:
 	return cards.pop_front()

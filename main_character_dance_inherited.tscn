@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://54q5o1v7d3bm"]
+[gd_scene load_steps=5 format=3 uid="uid://ddttk50xdcux4"]
 
 [ext_resource type="PackedScene" uid="uid://ctpcqhbt6fj0v" path="res://main_character_dance.glb" id="1_ocad0"]
 [ext_resource type="Shader" path="res://scenes/toon.gdshader" id="2_rw24y"]
@@ -74,7 +74,6 @@ bones/37/rotation = Quaternion(-0.0452117, -0.528106, -0.392509, 0.751662)
 bones/37/scale = Vector3(1, 1, 1)
 bones/38/rotation = Quaternion(0.069562, -0.139025, -0.0531187, 0.986413)
 bones/39/rotation = Quaternion(0.138766, -0.0239734, 0.019346, 0.989846)
-bones/39/scale = Vector3(1, 1, 1)
 bones/40/rotation = Quaternion(-0.00599268, -0.690822, -0.0205747, 0.722708)
 bones/40/scale = Vector3(1, 1, 1)
 bones/41/rotation = Quaternion(0.113682, -0.0684331, 0.0337521, 0.990583)
@@ -542,7 +541,6 @@ bones/371/scale = Vector3(1, 1, 1)
 bones/373/position = Vector3(0.110519, 0.248218, -2.98023e-06)
 bones/373/rotation = Quaternion(0.0308396, 0.0253047, 0.00891684, 0.999164)
 bones/380/rotation = Quaternion(0.899483, 0.00018457, -0.000379947, -0.436955)
-bones/380/scale = Vector3(1, 1, 1)
 bones/382/rotation = Quaternion(0.899483, 0.000184571, -0.000379945, 0.436955)
 bones/382/scale = Vector3(1, 1, 1)
 bones/383/rotation = Quaternion(1.38677e-06, -0.0106018, 0.999944, -1.56345e-08)
@@ -554,7 +552,6 @@ bones/385/scale = Vector3(1, 1, 1)
 bones/387/position = Vector3(-0.0833248, -0.190168, 0.00388262)
 bones/387/rotation = Quaternion(0.00620653, 0.0686868, -0.102202, 0.99237)
 bones/394/rotation = Quaternion(0.899483, 0.000184968, -0.000380771, -0.436955)
-bones/394/scale = Vector3(1, 1, 1)
 bones/396/rotation = Quaternion(0.899483, 0.000184975, -0.000380775, 0.436955)
 bones/396/scale = Vector3(1, 1, 1)
 bones/397/rotation = Quaternion(-1.39496e-06, -0.0106018, 0.999944, 1.47026e-08)

@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf2qnng4dyvlf"]
+
+[ext_resource type="PackedScene" uid="uid://o4if4grb62ec" path="res://scenes/start_menu_3d.tscn" id="1_0pql7"]
+[ext_resource type="Script" path="res://scenes/start_menu.gd" id="1_d7ocq"]
+[ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="2_83afr"]
+
+[node name="StartMenu" type="Control" node_paths=PackedStringArray("select_timer", "play_label", "quit_label", "select_bar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d7ocq")
+select_timer = NodePath("HoldTimer")
+selection_color = Color(0.980392, 0.580392, 0, 1)
+play_label = NodePath("PlayLabel")
+quit_label = NodePath("Quit")
+select_bar = NodePath("SelectBar")
+main_level_path = "res://scenes/test_main.tscn"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2560, 1440)
+render_target_update_mode = 4
+
+[node name="StartMenu3D" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_0pql7")]
+
+[node name="PlayLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 303.0
+offset_right = 1527.0
+offset_bottom = 1021.0
+theme = ExtResource("2_83afr")
+theme_override_font_sizes/normal_font_size = 381
+text = " PLAY"
+
+[node name="Quit" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 707.0
+offset_right = 1581.0
+offset_bottom = 1425.0
+theme = ExtResource("2_83afr")
+theme_override_font_sizes/normal_font_size = 200
+text = " QUIT"
+
+[node name="HoldTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="SelectBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 956.0
+offset_right = 1184.0
+offset_bottom = 1117.0
+
+[connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timer_timeout"]

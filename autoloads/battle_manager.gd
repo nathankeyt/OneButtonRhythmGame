@@ -16,6 +16,9 @@ var max_resources: int = 3
 var deck: Deck2D
 var hand: Hand2D
 
+var turns_left: int = 3
+var target_score: = 500
+
 var dance_grid: DanceGrid
 
 var player: Player
@@ -51,6 +54,9 @@ signal e_op_settled(score: Effect.OperatorType)
 signal card_played(card_renderer: CardRenderer2D)
 signal turn_ended(turn_type: TurnType)
 
+signal target_score_updated(target_score: int)
+signal turn_updated(turns_left: int)
+
 signal combo_updated(score: float)
 
 signal resource_updated(amount: int)
@@ -61,6 +67,9 @@ signal example_note_played(num: String, is_target: bool)
 signal track_ended
 signal note_hit(acc: AccType, is_early: bool)
 
+signal win;
+signal lose;
+
 var is_next_note_scoring: bool = false
 var was_last_note_scoring: bool = false
 var late_flag: bool = false
@@ -70,7 +79,10 @@ var can_hit: bool = false
 var curr_op: Effect.OperatorType = 0
 
 func _ready() -> void:
-	note_hit.connect(on_note_hit)
+	#   note_hit.connect(on_note_hit)
+	await Engine.get_main_loop().process_frame
+	target_score_updated.emit(target_score)
+	turn_updated.emit(turns_left)
 
 func add_player_score(acc: float):
 	if not curr_temp_score_partition:
@@ -159,10 +171,25 @@ func execute_turn():
 			for enemy: Enemy in enemies:
 				enemy.end_turn()
 				
+			await get_tree().create_timer(GlobalAudioManager.curr_beat_rate * 2.0).timeout
+				
 			hand.raise_hand()
 			curr_turn = TurnType.PLAYER
+			turns_left -= 1
+			turn_updated.emit(turns_left)
+			check_win()
+			check_loss()
+			
 			
 	curr_phase = PhaseType.CARD
+	
+func check_win():
+	if player_total_score >= target_score:
+		win.emit()
+
+func check_loss():
+	if turns_left <= 0 and player_total_score < target_score:
+		lose.emit()
 	
 func reset_resources():
 	curr_resources = max_resources
@@ -341,12 +368,12 @@ func get_acc_type(time_diff: float) -> AccType:
 	
 	return AccType.LATE
 	
-func on_note_hit(acc_type: AccType, ):
-	match acc_type:
-		AccType.PERFECT:
-			add_combo()
-		_:
-			reset_combo()
+#func on_note_hit(acc_type: AccType, ):
+	#match acc_type:
+		#AccType.PERFECT:
+			#add_combo()
+		#_:
+			#reset_combo()
 	
 func add_combo():
 	combo_score += 0.5

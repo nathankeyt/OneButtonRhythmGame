@@ -23,7 +23,9 @@
 [ext_resource type="Script" path="res://scenes/beat_count_label.gd" id="21_b5owt"]
 [ext_resource type="AudioStream" uid="uid://tp2f303u8nx" path="res://resources/audio_streams/clap.ogg" id="21_oi485"]
 [ext_resource type="Theme" uid="uid://c7o8qa3bsgke3" path="res://resources/themes/score.tres" id="21_oonqa"]
-[ext_resource type="Shader" path="res://screen.gdshader" id="24_tm8s6"]
+[ext_resource type="Script" path="res://scenes/turns_left_label.gd" id="24_0lxno"]
+[ext_resource type="Script" path="res://scenes/target_score_label.gd" id="25_ac5vq"]
+[ext_resource type="Script" path="res://scenes/scene_loader.gd" id="26_xiebk"]
 
 [sub_resource type="Resource" id="Resource_472e0"]
 script = ExtResource("4_tni2y")
@@ -77,32 +79,6 @@ shader_parameter/use_value_gradient = false
 shader_parameter/invert = false
 shader_parameter/gradient_x = SubResource("GradientTexture1D_i3b7j")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mr25"]
-shader = ExtResource("24_tm8s6")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.4
-shader_parameter/scanlines_width = 0.0
-shader_parameter/grille_opacity = 0.3
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/pixelate = true
-shader_parameter/roll = true
-shader_parameter/roll_speed = 5.0
-shader_parameter/roll_size = 19.709
-shader_parameter/roll_variation = 0.585
-shader_parameter/distort_intensity = 0.0
-shader_parameter/noise_opacity = 0.1
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.06
-shader_parameter/aberration = 0.00500005
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.085
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.135
-shader_parameter/vignette_opacity = 0.5
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_pygnv"]
-
 [node name="Main" type="Node2D"]
 
 [node name="DanceFloorContainer" type="SubViewportContainer" parent="."]
@@ -125,7 +101,7 @@ battle_song = SubResource("Resource_472e0")
 [node name="DefaultDeck" parent="." instance=ExtResource("2_stpix")]
 position = Vector2(2339, 1170)
 scale = Vector2(1, 1.0021)
-cards = Array[ExtResource("3_ygbk7")]([ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7")])
+cards = Array[ExtResource("3_ygbk7")]([ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7"), ExtResource("7_rhx28"), ExtResource("8_l3ij7")])
 card_renderer_scene = ExtResource("6_xowa6")
 
 [node name="PlayedCards" type="HBoxContainer" parent="."]
@@ -205,6 +181,7 @@ length = 2
 perfect_color = Color(0.980392, 0.580392, 0, 1)
 
 [node name="ComboLabel" type="RichTextLabel" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -268,10 +245,35 @@ script = ExtResource("21_b5owt")
 
 [node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="."]
 
-[node name="ScreenFilter" type="Sprite2D" parent="."]
-visible = false
-z_index = 2
-material = SubResource("ShaderMaterial_0mr25")
-position = Vector2(1280, 720)
-scale = Vector2(2560, 1440)
-texture = SubResource("CanvasTexture_pygnv")
+[node name="TurnsLeftLabel" type="RichTextLabel" parent="."]
+offset_left = 1807.0
+offset_top = 340.0
+offset_right = 2479.0
+offset_bottom = 690.0
+theme = ExtResource("21_oonqa")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[right]Turns Left:
+3[/right]"
+script = ExtResource("24_0lxno")
+
+[node name="TargetScoreLabel" type="RichTextLabel" parent="."]
+offset_left = 1712.0
+offset_top = 54.0
+offset_right = 2497.0
+offset_bottom = 404.0
+theme = ExtResource("21_oonqa")
+bbcode_enabled = true
+text = "[right]Target: 
+500[/right]"
+script = ExtResource("25_ac5vq")
+
+[node name="WinSceneLoader" type="Node" parent="."]
+script = ExtResource("26_xiebk")
+signal_enum = "win"
+scene_path = "res://scenes/win_menu.tscn"
+
+[node name="LoseSceneLoader" type="Node" parent="."]
+script = ExtResource("26_xiebk")
+signal_enum = "lose"
+scene_path = "res://scenes/quit_menu.tscn"

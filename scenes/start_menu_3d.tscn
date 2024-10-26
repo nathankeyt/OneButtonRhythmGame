@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://4p3oxix4elvf"]
+[gd_scene load_steps=5 format=3 uid="uid://o4if4grb62ec"]
 
-[ext_resource type="Script" path="res://start_menu_3d.gd" id="1_jftue"]
-[ext_resource type="PackedScene" uid="uid://54q5o1v7d3bm" path="res://main_character_dance_inherited.tscn" id="1_jrc77"]
+[ext_resource type="Script" path="res://scenes/start_menu_3d.gd" id="1_jftue"]
+[ext_resource type="PackedScene" uid="uid://ddttk50xdcux4" path="res://main_character_dance_inherited.tscn" id="1_jrc77"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2nxig"]
 
@@ -19,7 +19,7 @@ transform = Transform3D(-1.74037e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -1.74037e-08, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45384, 0.653351, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.215049, 0.121189, 0.969055, 0.0239935, 0.992627, -0.118813, -0.976309, -0.00229946, -0.216371, 1.62756, 1.68478, 0.36759)
+transform = Transform3D(-0.215049, 0.121189, 0.969055, 0.0239935, 0.992627, -0.118812, -0.976309, -0.00229945, -0.216371, 1.62756, 1.68478, 0.424704)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.03874e-06, 23.7635, 0, -23.7635, -1.03874e-06, 0, 0, 0, 23.7635, -5.06637, 0, 0)

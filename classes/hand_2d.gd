@@ -29,6 +29,7 @@ func _init() -> void:
 	BattleManager.hand = self
 
 func _ready() -> void:
+	await Engine.get_main_loop().process_frame
 	render_cards()
 	draw_cards(starter_draw_size)
 	GlobalAudioManager.play_battle_song(battle_song, -100.0)
